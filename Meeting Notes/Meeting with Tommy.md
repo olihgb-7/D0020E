@@ -35,3 +35,15 @@ Tommy upfattade att sin uppgift var att få Eclipse och och Jespers lösning att
 
 Tog lång tid att förstå den grafisk representationen
 Problem när Tommy skulle börja definiera grafik utifrån sina egna nya definitioner av SysML syntaxen
+
+## Emmas anteckningar: 
+Jesper hade ingen riktig plan, visste inte vad han skulle göra, hann inte planera och började koda för tidigt. 
+Ett stort problem var att Jesper hade tolkat SysML annorlunda än hur Tommy trodde det skulle va. 
+Jan vill ha mer som UML så man kan se tex dependency. Hitta nya parser. Går nog att använda hans definitioner. 
+Hade problem med import pga javascript, användare måste godkänna importer, Tex SI-enheter. 
+Svårt att förstå grafiska representationen. Ville ha ett träd men då hamnade inte allt på rätt nivå. 
+Hitta bättre bibliotek än -?-. Så enkelt så möjligt, kanske för jobbigt då med att dra o släppa block. 
+Mappstrukturen är helt okej, fler klasser hade behövts, stycka upp metoder o gör mer generella. 
+
+Det viktigaste för oss och vårt arbete är att få till en bra plan. 
+
