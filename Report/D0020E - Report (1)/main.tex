@@ -10,7 +10,7 @@
 \usepackage{caption} % Correct spacing for captions
 \usepackage{siunitx} % Package for handling numbers (ex \num{1e6}), units (ex \SI{15,3}{Nm}) and intervals (ex\SIrange{10}{20}{\celcius}) correctly
 
-\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
 \DeclareLanguageMapping{english}{english-apa}
 \addbibresource{references.bib}
 
@@ -20,11 +20,17 @@
 Emma Carlsson, \tt emacar-8@student.ltu.se \\ 
 Axel Kärnebro, \tt axekrn-7@student.ltu.se \\ 
 Magnus Stenfelt, \tt magset-8@student.ltu.se \\
-
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
 \includegraphics[width=0.3\textwidth]{ltu_swe.jpg}}
-
-
-
 \date{December 2020}
 
 \newpage
@@ -39,11 +45,11 @@ Magnus Stenfelt, \tt magset-8@student.ltu.se \\
 \section{Introduction}
 
 \subsection{Background}
-When developing large systems it is very important to not lose understanding of the system, however it's also very hard to not lose it. This is why developers have used some kind of modelling languages throughout time. UML, Unified Modeling Language, is one such language and SysML, Systems Modeling Language is an offshoot of UML and lets users practice Model-Based Systems Engineering(MBSE).  Modelling languages allows for creation of a graphical representation of the system, with varying levels of detail and complexity depending on what the project in question needs. It also allows developers to create and plan the entire system ahead of time, making it easier to avoid messy code and improves overall readability 
+When developing large systems it is very important to not lose understanding of the system, however it's also very hard to not lose it. This is why developers have used some kind of modelling languages throughout time. UML, Unified Modeling Language, is one such language and SysML, Systems Modeling Language, is an offshoot of UML and lets users practice Model-Based Systems Engineering(MBSE).  Modelling languages allows for creation of a graphical representation of the system, with varying levels of detail and complexity depending on what the project in question needs. It also allows developers to create and plan the entire system ahead of time, making it easier to avoid messy code and improves overall readability 
 \\ \\
 SysML v1 is a complete modelling language with very useful tools for creating and viewing system models. However there is a newer version of SysML in development, v2, which doesn't have any easy-to-use tools available for viewing system models. There are some tools, such as Eclipse Papyrus, but they are very complicated to install due to requiring many plugins and packages, and complicated to use making them unusable for less tech-literate users.
 \\ \\
-A proof of concept of an interactive SysML v2 viewer in a browser has been developed in a bachelor thesis here at LTU \cite{Jesper2020} proving that it is possible to render SysML diagrams in a browser. When another person took on the job to build on the proof of concept as a summer job however, it was discovered that a proof of concept doesn't necessarily scale and their solution couldn't be pushed forward further. Additional work is required to restart the project from scratch to avoid these scalability issues. 
+A proof of concept of an interactive SysML v2 viewer in a browser has been developed in a bachelor thesis here at LTU Jesper Nilsson in \cite{Jesper2020} proving that it is possible to render SysML diagrams in a browser. When another person took on the job \cite{Tommy2020} to build on the proof of concept as a summer job however, it was discovered that a proof of concept doesn't necessarily scale and their solution couldn't be pushed forward further. Additional work is required to restart the project from scratch to avoid these scalability issues. 
 \\ \\
 This is why this project was started, to find a way around the issues the prior experiments arrived at and to create a finished product, An interactive SysML v2 viewer in a browser.
 
@@ -78,6 +84,17 @@ The use-case diagram shown in figure \ref{use-case} describes the various uses o
   \item Project Stakeholders - This actors main function is that of an external (or in some cases internal) party which have interests of the particular system being developed. This actor can in a sense be seen as the customer of the particular system being developed.
 \end{itemize}
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=1\textwidth]{Packages_SysML-Project_first-draft.png}
+        \caption{Package diagram describing the basic structure of the implementation}
+        \label{package}
+    \end{center}
+\end{figure}
+
+The package diagram in figure \ref{package} shows the structure of our program. It consists of a frontend part and an interpreter. The frontend will be used to display a website using html and css presenting a graphical view of a system using SysML v2. 
+\\\\
+The interpreter consists of object definitions which handles the SysML v2 syntax that needs to be defined in order for the parser to translate the input correctly. The object definitions together with the parser is then used by the graphical representation to provide a graphical view of the parsed object definitions from the input. The parser in itself consists of the file reader, a syntax reader and the parse handlers. The parse handlers connects the parser with the object definitions so that a translation is possible while the file reader is responsible for actually reading the input and at last the syntax reader is responsible for interpreting what the file reader reads.
 
 
 \printbibliography
