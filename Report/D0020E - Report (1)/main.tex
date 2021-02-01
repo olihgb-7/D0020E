@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[margin=1.5cm]{geometry} % Change the margins
 \usepackage[utf8]{inputenc} % - Defines what coding LaTeX uses. Use this one.
-\usepackage[swedish]{babel}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx} % - Package for including images in the document.
 \usepackage{amsmath}
@@ -10,7 +10,7 @@
 \usepackage{caption} % Correct spacing for captions
 \usepackage{siunitx} % Package for handling numbers (ex \num{1e6}), units (ex \SI{15,3}{Nm}) and intervals (ex\SIrange{10}{20}{\celcius}) correctly
 
-\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
 \DeclareLanguageMapping{english}{english-apa}
 \addbibresource{references.bib}
 
@@ -20,14 +20,19 @@
 Emma Carlsson, \tt emacar-8@student.ltu.se \\ 
 Axel Kärnebro, \tt axekrn-7@student.ltu.se \\ 
 Magnus Stenfelt, \tt magset-8@student.ltu.se \\
-
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
 \includegraphics[width=0.3\textwidth]{ltu_swe.jpg}}
-
-
-
 \date{December 2020}
 
-\newpage
 
 \begin{document}
 
@@ -39,23 +44,23 @@ Magnus Stenfelt, \tt magset-8@student.ltu.se \\
 \section{Introduction}
 
 \subsection{Background}
-When developing large systems it is very important to not lose understanding of the system, however it's also very hard to not lose it. This is why developers have used some kind of modelling languages throughout time. UML, Unified Modeling Language, is one such language and SysML, Systems Modeling Language is an offshoot of UML and lets users practice Model-Based Systems Engineering(MBSE).  Modelling languages allows for creation of a graphical representation of the system, with varying levels of detail and complexity depending on what the project in question needs. It also allows developers to create and plan the entire system ahead of time, making it easier to avoid messy code and improves overall readability 
+When developing large and complex systems it is very important not to lose understanding of the system, however it is also very hard not to lose it. This is why developers have used some kind of modelling languages throughout time. UML \cite{UML}, Unified Modeling Language, is one such language and SysML \cite{SysML}, Systems Modeling Language, is an offshoot of UML and lets users practice Model-Based Systems Engineering \cite{MBSE} (MBSE). Modelling languages allow for creation of a graphical representation of the system, with varying levels of detail and complexity depending on what the project in question needs. It also allows developers to create and plan the entire system ahead of time, making it easier to avoid messy code and improves overall readability. 
 \\ \\
-SysML v1 is a complete modelling language with very useful tools for creating and viewing system models. However there is a newer version of SysML in development, v2, which doesn't have any easy-to-use tools available for viewing system models. There are some tools, such as Eclipse Papyrus, but they are very complicated to install due to requiring many plugins and packages, and complicated to use making them unusable for less tech-literate users.
+SysML v1 is a complete modelling language with very useful tools for creating and viewing system models. However there is a newer version of SysML in development, v2, which does not have any easy-to-use tools available for viewing system models. There are some tools, such as Eclipse Papyrus \cite{EclipsePapyrus}, but they are very complicated to install due to requiring many plugins and packages, and complicated to use making them unusable for less tech-literate users.
 \\ \\
-A proof of concept of an interactive SysML v2 viewer in a browser has been developed in a bachelor thesis here at LTU \cite{Jesper2020} proving that it is possible to render SysML diagrams in a browser. When another person took on the job to build on the proof of concept as a summer job however, it was discovered that a proof of concept doesn't necessarily scale and their solution couldn't be pushed forward further. Additional work is required to restart the project from scratch to avoid these scalability issues. 
+A proof of concept of an interactive SysML v2 viewer in a browser has been developed in a bachelor thesis here at LTU Jesper Nilsson in \cite{Jesper2020} proving that it is possible to render SysML diagrams in a browser. When another person took on the job, Tommy Andersson \cite{Tommy2020}, to build on the proof of concept as a summer job however, it was discovered that a proof of concept does not necessarily scale and their solution could not be developed any further. Additional work is required to restart the project from scratch to avoid these scalability issues. 
 \\ \\
-This is why this project was started, to find a way around the issues the prior experiments arrived at and to create a finished product, An interactive SysML v2 viewer in a browser.
+This is why this project was started, to find a way around the issues the prior experiments arrived at and to create a finished product, an interactive SysML v2 viewer in a browser.
 
 \subsection{Problem description}
-We have been tasked to create a web viewer for SysML v2. The viewer is meant to be for the system designer to use for a more clear and easy to understand description. There also has to be a tool to create the diagrams for SysML v2. After creating the SysML diagrams it is to be uploaded and shown in a clear and interactive manner. In the final product you are supposed to be able to click your way through on different parts to get to other diagrams giving the entire SysML more clarity. This is to be from a very high level overview and then ideally down to single components or parts of the entire system.
+The task is to create a web viewer for SysML v2. The viewer is meant to be for the system designer to use for a more clear and easy to understand description. There also has to be a tool to create the diagrams for SysML v2. After creating the SysML diagrams it is to be uploaded and shown in a clear and interactive manner. In the final product you are supposed to be able to click your way through on different parts to get to other diagrams giving the entire SysML more clarity. This is to be from a very high level overview and then ideally down to single components or parts of the entire system.
 \\\\
 The goal of this project is get an understanding of the SysML v2 language and in the end create an easy to understand tool for future SysML diagrams. We are also supposed to create this program in such a way that it can be built upon by another programmer in the case of us not succeeding. It also has to be able to be built upon due to SysML v2 not being finished and it still being updated. 
-\\
+\\\\
 In one sentence the project is to create a scalable SysML v2 web viewing tool that is easy to use and understand.
 
 \subsection{Objectives}
-The overall objective with this project is to create a tool which allows the user to get a clear understanding of a system. This tool should be able to give both an overview of the system and show the small details and how all the parts are connected. The system should be visualized using the SysML diagrams and written with the syntax of SysML v2 which is still in development. A very important part of this project is to make it open and scalable, our main goal is to lay the groundwork so that others can build upon and perfect it. 
+The overall objective with this project is to create a tool that allows the user to get a clear understanding of a complex system. This tool should be able to give both an overview of the system and show the small details and how all the parts are connected. The system should be visualized using the SysML diagrams and written with the syntax of SysML v2 which is still in development. A very important part of this project is to make it open and scalable, our main goal is to lay the groundwork so that others can build upon and perfect it. 
 \\\\
 This shall be demonstrated at the end of the project by running an example project written in SysML v2 on our website which should be able to parse the code, display at least one diagram and be interactive in such a way that the user can navigate from one diagram view to another. This diagram should be either a block definition diagram, internal block diagram or a sequence diagram. 
 \\\\
@@ -78,6 +83,68 @@ The use-case diagram shown in figure \ref{use-case} describes the various uses o
   \item Project Stakeholders - This actors main function is that of an external (or in some cases internal) party which have interests of the particular system being developed. This actor can in a sense be seen as the customer of the particular system being developed.
 \end{itemize}
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=1\textwidth]{Packages_SysML-Project_first-draft.png}
+        \caption{Package diagram describing the basic structure of the implementation}
+        \label{package}
+    \end{center}
+\end{figure}
+
+The package diagram in figure \ref{package} shows the structure of our program. It consists of a frontend part and an interpreter. The frontend will be used to display a website using HTML and CSS presenting a graphical view of a system using SysML v2. 
+\\\\
+The interpreter consists of object definitions which handles the SysML v2 syntax that needs to be defined in order for the parser to translate the input correctly. The object definitions together with the parser is then used by the graphical representation to provide a graphical view of the parsed object definitions from the input. The parser in itself consists of the file reader, a syntax reader and the parse handlers. The parsing handlers connects the parser with the object definitions so that a translation is possible while the file reader is responsible for actually reading the input and at last the syntax reader is responsible for interpreting what the file reader reads.
+
+\newpage
+\section{Results}
+
+\subsection{Delivery}
+
+TODO FOR LP3
+
+\subsection{Testing}
+
+%Local - changes introduce new bugs.
+%Unmasked - changes unmask previously existing bugs.
+%Remote - Changing one part breaks another part of the program. For example, Module A writes to a database. Module B reads from the database. If changes to what Module A writes to the database break Module B, it is remote regression.
+
+\subsubsection{Risks of regression}
+
+Based off of an interview with Tommy Andersson who previously worked on this project, our design is aiming to be as modular as possible with very distinct and separated classes and methods to offer as much scalability as possible. This, of course, raises the risk for remote regression as a small change in a method may ripple across the entire program. For example we might need to change a method, maybe to make it more efficient or if we discover a bug and this seemingly small change could cause much bigger problems since other parts of the program depends on this method. 
+\\\\
+Due to the fact that the planned implementation of the diagrams involves implementing the diagram one at a time, a big risk of both unmasked and remote regression appears. For example, modifying the parsing code  to include new definitions of SysML v2 functions may unmask bugs that was previously harmless and in turn, the graphical representation might break when implementing these new diagram definitions as well. Creating new definitions can create remote regression in both the graphical representation and the parser as well as creating local regression risks and as such extra care will have to be put into handling new definitions.
+\\\\
+Every time we add something new there is of course also the risk of local regression, and when modifying existing classes and methods to account for new diagrams the risk of local regression also increases. The risk of unmasked regression also increases in these situations.
+\\\\
+Our design choices open up the possibility of many regression risks, however the trade off for us seems worth it due to the benefits of scalability and the ability to salvage code in the case of failure. Regression risks can be worked around through proper testing and vetting but scalability issues are not so easily patched at a later date.
+
+
+\subsubsection{Strategy for regression testing}
+
+\paragraph{Traceability}
+From our use case diagram and requirement specifications we can decide what to test using traceability. For example the use case diagram describes that a user should be able to import SysML code to browser app and then interact with the diagrams. This could be tested to make sure that the functions works as intended and similarly this should be done for every use-case described. One approach to make sure that the tests are traceable is to use branches in the development of different parts of the application. This provides a way to easily trace tests to specific branches of code containing specific functionality.
+
+\paragraph{Change analysis}
+To ensure that no errors manages to sneak it is way past development, a close eye needs to be kept on any rippling effects after changes. What we mean by this is that a highly modular program becomes very hard to keep track of when the program scales to larger sizes and as such, remote regression becomes very hard to notice and patch. When we want to add or change a part we need to triple check all the parts that inherits what we changed to make sure that behaviour has not changed. We need to trace the changes all the way through all the other modules that it can affect to make sure our program works as intended.
+
+\paragraph{Quality risk analysis}
+The biggest factor in the success of this project is whether or not we can interpret the SysML v2 language and documentation correctly. A failure to understand the SysML v2 language and documentation would lead to a poor implementation of the application which would lead to an application that is unable to be built upon in the future. Therefor a strategy is to make up a solid plan of how the solution is supposed to be implemented and make it possible for others to build upon this plan in the future.
+
+\paragraph{Cross functional testing}
+Using cross functional testing we can find bugs in unexpected places. This is done by testing functions that should have no effect on each other both together and in isolation. If the results are different, there is a bug. At first we could do a wide search to cover large areas of the system in order to find common areas with bugs. Then when we know these problem areas, we can focus the testing on them to uncover more bugs. 
+
+
+\subsubsection{Development description}
+
+The following table describes our plan for automated unit and system level testing for regression. Our plan contains two stories, one for unit level and one for system level, on how to create automated testing.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=1\textwidth]{Test-table.png}
+        \caption{Table describing automated test stories}
+        \label{package}
+    \end{center}
+\end{figure}
 
 
 \printbibliography
