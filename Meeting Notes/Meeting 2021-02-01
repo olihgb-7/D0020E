@@ -1,0 +1,19 @@
+# Meeting 2021-02-01
+
+**Date:** Meeting 2021-02-01 13:00 
+**Participants:** Axel, Oliver, Emma, Magnus and Jan
+**Responsible for the meeting:** Oliver, Magnus
+
+## Done since last meeting: 
+* Kept working on the class diagram (1.2) and planning notes as planned (2.1)
+
+## Discussion during the meeting:
+Oliver shows our updated class diagram and explains what we’ve added. Talking about how we’ve worked together as one big group to get a unified understanding of SysML v2. Oliver and Magnus went through our plan for next week to wrap up the class diagram and start working on the plan for parsing the SysML v2 text. Jan is happy about our plans and our work so far. Oliver asks about which release of SysML v2 we should follow and Jan thinks the December version is fine to keep working on. 
+
+## For the next meeting:
+* Finish the class diagram by doing requirements and constraints. (1.2) (2.1)
+* Start working through a plan for parsing (1.3) and maybe research parsing generators (3.1). 
+* Update the planning notes and other documents in github. 
+
+
+**Date for next meeting:** 2021-02-05 13:00 
