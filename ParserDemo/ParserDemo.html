@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="sysml-parser.js"></script>    
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+        <title>Parser Generator Demo</title
+    </head>
+    <body>
+        
+        <div id="header">
+            <h1>Parser Generator Demo</h1>
+            <a href="grammar.html">SysML v2 Grammar</a>
+            <input type="file" name="inputfile" id="inputfile"> 
+        </div>
+        
+        <div id="output">
+            <h2 id="outputTextFileName"></h2>
+            <pre id="outputTextFile"></pre> 
+            
+            <h2 id="outputParsedArrayName"></h2>
+            <pre id="outputParsedArray"></pre> 
+        </div>
+        
+        <script type="text/javascript"> 
+
+            var fr = new FileReader();
+            var parsedArray;
+            var filenName, text;
+
+            document.getElementById('inputfile').onchange = function () {
+                
+                
+                fileName = this.value.replace(/.*[\/\\]/, '');
+                
+                if (fileName.split('.')[1] == "sysml") {
+                    
+                    document.getElementById("outputTextFileName").innerHTML = "Input file: " + fileName;
+                    document.getElementById("outputParsedArrayName").innerHTML = "Parsed Array based on input file: " + fileName;
+
+                    fr.onload=function(e){ 
+
+                        text = e.target.result;
+                        parsedArray = PARSER.parse(fr.result);
+
+                        console.log(text);
+                        console.log(parsedArray);
+
+                        document.getElementById("outputTextFile").innerHTML = text;
+                        document.getElementById("outputParsedArray").innerHTML = JSON.stringify(parsedArray, null, '\t');
+                    } 
+
+                    fr.readAsText(this.files[0]); 
+                }
+                else {
+                    
+                    document.getElementById("outputTextFileName").innerHTML = "";
+                    document.getElementById("outputParsedArrayName").innerHTML = "";
+                    document.getElementById("outputTextFile").innerHTML = "Wrong file extension. Only accepting .sysml files!";
+                    document.getElementById("outputParsedArray").innerHTML = "";
+                }
+            };
+        </script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+h1 {
+    
+    font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 50px;
+}
+
+a {
+    
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:link, a:visited {
+    
+    color: black;
+}
+
+a:hover, a:active {
+    
+    color: dimgrey;
+}
+
+input {
+    
+    display: block;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+pre {
+    
+    display: block;
+    background-color: #121212;
+    color: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-x: scroll;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+pre:empty {
+    
+    display: none;
+}
+
+#output {
+    
+    max-width: 50%;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#header {
+    
+    max-width: 50%;
+    width: 50%;
+    margin: 0 auto;
+}
