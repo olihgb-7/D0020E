@@ -13,27 +13,27 @@ startRule = package_block*
 
 
 // CODE DEFINITION RULES
-package_block = type:package_token _ name:name _ LB _ content:content RB _ {
+package_block = type:package_token _ name:NAME _ LB _ content:content RB _ {
 
     if (!Array.isArray(content) || !content.length) {
-        return {type: "PackageClass", name: name.join(''), content: null}
+        return {type: "PackageClass", name: name.join(''), content: null, contentLength: 0}
     }
     else {
-        return {type: "PackageClass", name: name.join(''), content}
+        return {type: "PackageClass", name: name.join(''), content, contentLength: content.length}
     }
 }
 
-part_def_block = type:part_def_token _ name:name _ (";" / (LB _ content:content RB)) {
- 	
+part_def_block = type:part_def_token _ name:NAME _ LB _ content:content RB {
+    
     if (!Array.isArray(content) || !content.length) {
-        return {type: "PartClass", isDefinition: true, name: name.join(''), content: null}
+        return {type: "PartClass", isDefinition: true, name: name.join(''), content: null, contentLength: 0}
     }
     else {
-        return {type: "PartClass", isDefinition: true, name: name.join(''), content}
+        return {type: "PartClass", isDefinition: true, name: name.join(''), content, contentLength: content.length}
     }
 }
 
-part_usage = ref_token* _ type:part_token _ alias:name _ ":" _ parent:name _ multi:multiplicity* _ (";" / (LB _ content:content RB)) {
+part_usage = ref_token* _ type:part_token _ name:NAME _ ":" _ parent:NAME _ multi:MULTIPLICITY* _ (";" / (LB _ content:content RB)) {
     
     var multiArray = multi.join();
     var single = true;
@@ -46,26 +46,27 @@ part_usage = ref_token* _ type:part_token _ alias:name _ ":" _ parent:name _ mul
     }
     
     if (!Array.isArray(multi) || !multi.length) {
-        return {type: "PartClass", isDefinition: false, alias: alias.join(''), parent: parent.join(''), multi: null}
+        return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: null, content: null, contentLength: 0}
     }
     else if(single) {
         var digit = multi[0][1]
-        return {type: "PartClass", isDefinition: false, alias: alias.join(''), parent: parent.join(''), multi: digit.join('')}
+        return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: digit.join(''), content: null, contentLength: 0}
 
     	
     }
     else {
     	var firstDigit = multi[0][1]
         var secondDigit = multi[0][2][0][1]
-    	return {type: "PartClass", isDefinition: false, alias: alias.join(''), parent: parent.join(''), multi: firstDigit.join('') + ".." + secondDigit.join('')}
+    	return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: firstDigit.join('') + ".." + secondDigit.join(''), content: null, contentLength: 0}
     }
 }
 
 
 // CONTENT TO BE PARSED
-content = (package_block:(package_block) _ {return package_block} /
-		  part_def_block:(part_def_block) _ {return part_def_block} / 
-          part_usage:(part_usage) _ {return part_usage})*
+content = (semi:SEMI _ {return semi}									/
+		   package_block:(package_block) _ {return package_block} 		/
+		   part_def_block:(part_def_block) _ {return part_def_block} 	/ 
+           part_usage:(part_usage) _ {return part_usage})*
 
 
 //TOKENS
@@ -75,11 +76,10 @@ part_token = "part"
 ref_token = "ref"
 
 
-
 // BASE RULES
-multiplicity = "[" [0-9]* (".." [0-9]*)* "]"
+MULTIPLICITY = "[" [0-9]* (".." [0-9]*)* "]"
 LB = "{"
 RB = "}"
-name = ("'" [a-zA-Z0-9 ]+ "'") / [a-zA-Z0-9]+
-code_block = [a-zA-Z0-9 \n\r\t]*
+SEMI = ";"
+NAME = ("'" [a-zA-Z0-9 ]+ "'") / [a-zA-Z0-9]+
 _ "whitespaces" = [ \n\r\t]*

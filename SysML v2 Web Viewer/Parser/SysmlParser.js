@@ -144,26 +144,26 @@ function peg$parse(input, options) {
       peg$c0 = function(type, name, content) {
 
           if (!Array.isArray(content) || !content.length) {
-              return {type: "PackageClass", name: name.join(''), content: null}
+              return {type: "PackageClass", name: name.join(''), content: null, contentLength: 0}
           }
           else {
-              return {type: "PackageClass", name: name.join(''), content}
+              return {type: "PackageClass", name: name.join(''), content, contentLength: content.length}
           }
       },
       peg$c1 = function(type, name, content) {
           
           if (!Array.isArray(content) || !content.length) {
-              return {type: "PartClass", isDefinition: true, name: name.join(''), content: null}
+              return {type: "PartClass", isDefinition: true, name: name.join(''), content: null, contentLength: 0}
           }
           else {
-              return {type: "PartClass", isDefinition: true, name: name.join(''), content}
+              return {type: "PartClass", isDefinition: true, name: name.join(''), content, contentLength: content.length}
           }
       },
       peg$c2 = ":",
       peg$c3 = peg$literalExpectation(":", false),
       peg$c4 = ";",
       peg$c5 = peg$literalExpectation(";", false),
-      peg$c6 = function(type, alias, parent, multi) {
+      peg$c6 = function(type, name, parent, multi) {
           
           var multiArray = multi.join();
           var single = true;
@@ -176,18 +176,18 @@ function peg$parse(input, options) {
           }
           
           if (!Array.isArray(multi) || !multi.length) {
-              return {type: "PartClass", isDefinition: false, alias: alias.join(''), parent: parent.join(''), multi: null}
+              return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: null, content: null, contentLength: 0}
           }
           else if(single) {
               var digit = multi[0][1]
-              return {type: "PartClass", isDefinition: false, alias: alias.join(''), parent: parent.join(''), multi: digit.join('')}
+              return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: digit.join(''), content: null, contentLength: 0}
 
           	
           }
           else {
           	var firstDigit = multi[0][1]
               var secondDigit = multi[0][2][0][1]
-          	return {type: "PartClass", isDefinition: false, alias: alias.join(''), parent: parent.join(''), multi: firstDigit.join('') + ".." + secondDigit.join('')}
+          	return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: firstDigit.join('') + ".." + secondDigit.join(''), content: null, contentLength: 0}
           }
       },
       peg$c7 = function(semi) {return semi},
