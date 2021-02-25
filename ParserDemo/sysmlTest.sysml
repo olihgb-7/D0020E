@@ -22,3 +22,8 @@ package NewPackage {
 
     part outer2: Outer2;
 }
+
+package NewPackage2 {
+
+    part test : Test;
+}
