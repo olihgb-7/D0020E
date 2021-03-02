@@ -23,17 +23,20 @@ package_block = type:package_token _ name:NAME _ LB _ content:content RB _ {
     }
 }
 
-part_def_block = type:part_def_token _ name:NAME _ LB _ content:content RB {
+part_def_block = type:part_def_token _ name:NAME _ content:(SEMI / (LB _ content RB)) {  
     
-    if (!Array.isArray(content) || !content.length) {
-        return {type: "PartClass", isDefinition: true, name: name.join(''), content: null, contentLength: 0}
+    if (content[2] !== undefined && content[2].length) {
+    
+    	return {type: "PartClass", isDefinition: true, name: name.join(''), content: content[2], contentLength: content.length}
+    	console.log(content[2]);
     }
     else {
-        return {type: "PartClass", isDefinition: true, name: name.join(''), content, contentLength: content.length}
+    
+    	return {type: "PartClass", isDefinition: true, name: name.join(''), content: null, contentLength: 0}
     }
 }
 
-part_usage = ref_token* _ type:part_token _ name:NAME _ ":" _ parent:NAME _ multi:MULTIPLICITY* _ (";" / (LB _ content:content RB)) {
+part_usage = ref_token* _ type:part_token _ name:NAME _ ":" _ instanceOf:NAME _ multi:MULTIPLICITY* _ (SEMI / (LB _ content:content RB)) {
     
     var multiArray = multi.join();
     var single = true;
@@ -46,25 +49,24 @@ part_usage = ref_token* _ type:part_token _ name:NAME _ ":" _ parent:NAME _ mult
     }
     
     if (!Array.isArray(multi) || !multi.length) {
-        return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: null, content: null, contentLength: 0}
+        return {type: "PartClass", isDefinition: false, name: name.join(''), instanceOf: instanceOf.join(''), multi: null, content: null, contentLength: 0}
     }
     else if(single) {
         var digit = multi[0][1]
-        return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: digit.join(''), content: null, contentLength: 0}
+        return {type: "PartClass", isDefinition: false, name: name.join(''), instanceOf: instanceOf.join(''), multi: digit.join(''), content: null, contentLength: 0}
 
     	
     }
     else {
     	var firstDigit = multi[0][1]
         var secondDigit = multi[0][2][0][1]
-    	return {type: "PartClass", isDefinition: false, name: name.join(''), parent: parent.join(''), multi: firstDigit.join('') + ".." + secondDigit.join(''), content: null, contentLength: 0}
+    	return {type: "PartClass", isDefinition: false, name: name.join(''), instanceOf: instanceOf.join(''), multi: firstDigit.join('') + ".." + secondDigit.join(''), content: null, contentLength: 0}
     }
 }
 
 
 // CONTENT TO BE PARSED
-content = (semi:SEMI _ {return semi}									/
-		   package_block:(package_block) _ {return package_block} 		/
+content = (package_block:(package_block) _ {return package_block} 		/
 		   part_def_block:(part_def_block) _ {return part_def_block} 	/ 
            part_usage:(part_usage) _ {return part_usage})*
 

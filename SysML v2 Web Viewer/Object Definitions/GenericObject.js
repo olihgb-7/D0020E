@@ -5,14 +5,16 @@ class GenericObject{
      * @param {string} name Name for object created
      * @param {string} type Object type eg. Part or package etc.
      * @param {boolean} isDefinition Is object a definition or usage
-     * @param {string} parent The parent of the object
+     * @param {string} parent The parent of the object. At the moment a parent is classified as a container object a level above
+     * @param {string} instanceOf The object that another object is an instance of
      */
-    constructor(name, type, isDefinition, parent){
+    constructor(name, type, isDefinition, parent, instanceOf){
         this.name = name;
         this.type = type;
         this.isDefinition = isDefinition;
         this.children = [];
         this.parent = parent;
+        this.instanceOf = instanceOf;
     }
     getName(){
         return this.name;
@@ -28,6 +30,10 @@ class GenericObject{
 
     getParent(){
         return this.parent
+    }
+
+    getInstanceOf(){
+        return this.instanceOf;
     }
 
     addChild(child){
