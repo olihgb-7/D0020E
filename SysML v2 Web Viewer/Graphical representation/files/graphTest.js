@@ -92,17 +92,38 @@ function main(container)
             // Updates the display
             graph.getModel().endUpdate();
         }
-        addObject(graph);
     }
 };
 
-function addObject(graph){
-    graph.getModel().beginUpdate();
+function addObject(graph, name, posx, posy){
     var parent = graph.getDefaultParent();
+    graph.getModel().beginUpdate();
     try{
-        var v3 = graph.insertVertex(parent, null, 'test3', 200, 80, 100, 70);
+        var v1 = graph.insertVertex(parent, null, name, posx, posy, 100, 70);
     }
     finally{
         graph.getModel().endUpdate();
     }
+    return v1;
+}
+
+function drawEdge(graph, v1, v2){
+    var parent = graph.getDefaultParent();
+    graph.getModel().beginUpdate();
+    try{
+        var e1 = graph.insertEdge(parent, null, '', v1, v2);
+    }
+    finally{
+        graph.getModel().endUpdate();
+    }
+}
+
+function createGraph(container){
+    // Creates the graph inside the given container
+    var graph = new mxGraph(container);
+    graph.setConnectable(false);
+    return graph;
+}
+function test(){
+    console.log("hello");
 }
