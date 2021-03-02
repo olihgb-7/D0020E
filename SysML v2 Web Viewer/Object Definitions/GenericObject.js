@@ -13,6 +13,7 @@ class GenericObject{
         this.isDefinition = isDefinition;
         this.children = [];
         this.parent = parent;
+        this.graphObject;
     }
     getName(){
         return this.name;
