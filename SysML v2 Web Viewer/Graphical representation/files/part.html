@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="../src/js/mxClient.js"></script>
 
 	<!-- Example code -->
+<<<<<<< Updated upstream
 	<script type="text/javascript">
 		// Overridden to define per-shape connection points
 		mxGraph.prototype.getAllConnectionConstraints = function(terminal, source)
@@ -93,6 +94,10 @@
 				try
 				{
 					var v1 = graph.insertVertex(parent, null, 'test1', 100, 20, 100, 70, 'ROUNDED;strokeColor=red;fillColor=orange');
+=======
+	<script type="text/javascript" src="graphTest.js"></script>
+	<script src="graphTest2.js"></script>
+>>>>>>> Stashed changes
 
 					var v2 = graph.insertVertex(parent, null, 'test2', 300, 150, 200, 200);
 					
@@ -112,11 +117,16 @@
 </head>
 
 <!-- Page passes the container for the graph to the program -->
-<body onload="main(document.getElementById('graphContainer'))">
+<body onload="main2(document.getElementById('graphContainer'))">
 
 	<!-- Creates a container for the graph with a grid wallpaper -->
 	<div id="graphContainer"
 		style="position:relative;overflow:hidden;width:642px;height:482px;background:url('editors/images/grid.gif');cursor:default;">
+<<<<<<< Updated upstream
 	</div>
+=======
+</div>
+
+>>>>>>> Stashed changes
 </body>
 </html>
