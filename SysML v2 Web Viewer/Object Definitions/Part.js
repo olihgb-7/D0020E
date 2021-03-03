@@ -4,10 +4,3 @@ class Part extends GenericObject {
         this.v = v;
     }
 }
-
-var test = new Part("what", "the", true, "fuck");
-
-console.log(test.getName());
-console.log(test.getObjectType());
-console.log(test.getParent());
-
