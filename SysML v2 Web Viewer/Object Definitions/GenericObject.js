@@ -1,4 +1,3 @@
-
 class GenericObject{
     /**
      * 
@@ -34,6 +33,10 @@ class GenericObject{
     addChild(child){
         this.children.push(child);
     }
+
+    setGraphObject(object){
+        this.graphObject = object;
+    }
 }
 
-module.exports = GenericObject;
+
