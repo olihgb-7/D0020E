@@ -95,8 +95,12 @@ function main(container)
     }
 };
 
-function addObject(graph, name, posx, posy){
-    var parent = graph.getDefaultParent();
+function addObject(graph, parent, name, posx, posy){
+
+    if (parent == null){
+        parent = graph.getDefaultParent();
+    }
+
     graph.getModel().beginUpdate();
     try{
         var v1 = graph.insertVertex(parent, null, name, posx, posy, 100, 70);
@@ -118,12 +122,9 @@ function drawEdge(graph, v1, v2){
     }
 }
 
+var sysmlGraph;
 function createGraph(container){
     // Creates the graph inside the given container
-    var graph = new mxGraph(container);
-    graph.setConnectable(false);
-    return graph;
-}
-function test(){
-    console.log("hello");
+    sysmlGraph = new mxGraph(container);
+    sysmlGraph.setConnectable(false);
 }
