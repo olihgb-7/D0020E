@@ -36,65 +36,15 @@ mxShape.prototype.constraints = [new mxConnectionConstraint(new mxPoint(0.25, 0)
 // Edges have no connection points
 mxPolyline.prototype.constraints = null;
 
-// Program starts here. Creates a sample graph in the
-// DOM node with the specified ID. This function is invoked
-// from the onLoad event handler of the document (see below).
-function main(container)
-{
-    // Checks if the browser is supported
-    if (!mxClient.isBrowserSupported())
-    {
-        // Displays an error message if the browser is not supported.
-        mxUtils.error('Browser is not supported!', 200, false);
-    }
-    else
-    {
-        // Disables the built-in context menu
-        mxEvent.disableContextMenu(container);
 
-        // Creates the graph inside the given container
-        var graph = new mxGraph(container);
-        graph.setConnectable(true);
-        
-        // Enables connect preview for the default edge style
-        graph.connectionHandler.createEdgeState = function(me)
-        {
-            var edge = graph.createEdge(null, null, null, null, null);
-            
-            return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
-        };
-        
-        // Specifies the default edge style
-        graph.getStylesheet().getDefaultEdgeStyle()['edgeStyle'] = 'orthogonalEdgeStyle';
-        
-        // Enables rubberband selection
-        new mxRubberband(graph);
-        
-        // Gets the default parent for inserting new cells. This
-        // is normally the first child of the root (ie. layer 0).
-        var parent = graph.getDefaultParent();
-                        
-        // Adds cells to the model in a single step
-        graph.getModel().beginUpdate();
-        try
-        {
-            var v1 = graph.insertVertex(parent, null, 'test1', 100, 20, 100, 70, 'ROUNDED;strokeColor=red;fillColor=orange');
-
-            var v2 = graph.insertVertex(parent, null, 'test2', 300, 150, 200, 200);
-            
-            
-            var e1 = graph.insertEdge(parent, null, '', v1, v2);
-            
-        
-        }
-        finally
-        {
-            // Updates the display
-            graph.getModel().endUpdate();
-        }
-    }
-};
-
+/**
+ * addObject creates a vertex from mxGraph based on the input, returns this vertex as an object
+ * @param {graphObject} graph a graph object which can be created using createGraph()
+ * @param {graphObject} parent can be a graph object or default parent
+ * @param {String} name name for vertex
+ * @param {Int} posx position on x-axis
+ * @param {Int} posy position on y-axis
+ */
 function addObject(graph, parent, name, posx, posy){
 
     if (parent == null){
@@ -111,6 +61,12 @@ function addObject(graph, parent, name, posx, posy){
     return v1;
 }
 
+/**
+ * Draws an edge between two vertexes inside a graph
+ * @param {graphObject} graph a graph object which can be created using createGraph()
+ * @param {vertexObject} v1 a vertex object which can be created and drawn using addObject()
+ * @param {vertexObject} v2 a vertex object which can be created and drawn using addObject()
+ */
 function drawEdge(graph, v1, v2){
     var parent = graph.getDefaultParent();
     graph.getModel().beginUpdate();
@@ -122,7 +78,14 @@ function drawEdge(graph, v1, v2){
     }
 }
 
+//Vital global variable that represents the graph that we draw everything in
 var sysmlGraph;
+
+
+/**
+ * Creates a graphObject using a container(usually a div)
+ * @param {container} container 
+ */
 function createGraph(container){
     // Creates the graph inside the given container
     sysmlGraph = new mxGraph(container);
