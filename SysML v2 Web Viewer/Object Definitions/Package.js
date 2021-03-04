@@ -1,6 +1,9 @@
-var GenericObject = require('./GenericObject.js');
+// var GenericObject = require('./GenericObject.js');
 
 class Package extends GenericObject {
 
 }
-module.exports = Package;
+
+/*
+module.exports = Package; // TODO: REMOVE WHEN DONE WITH Node.js TESTING!!!
+*/
