@@ -143,23 +143,40 @@
 
         peg$c0 = function(type, name, content) {
 
-            if (!Array.isArray(content) || !content.length) {
-                return {type: "PackageClass", name: name.join(''), content: null, contentLength: 0}
+        	var outputName;
+
+        	if (name[0] === "'") {
+            	outputName = name[1].join('');
             }
             else {
-                return {type: "PackageClass", name: name.join(''), content, contentLength: content.length}
+            	outputName = name.join('');
+            }
+
+            if (!Array.isArray(content) || !content.length) {
+                return {type: "PackageClass", name: outputName, content: null, contentLength: 0}
+            }
+            else {
+                return {type: "PackageClass", name: outputName, content, contentLength: content.length}
             }
         },
         peg$c1 = function(type, name, content) {  
             
+            var outputName;
+
+        	if (name[0] === "'") {
+            	outputName = name[1].join('');
+            }
+            else {
+            	outputName = name.join('');
+            }
+            
             if (content[2] !== undefined && content[2].length) {
             
-            	return {type: "PartClass", isDefinition: true, name: name.join(''), content: content[2], contentLength: content.length}
-            	console.log(content[2]);
+            	return {type: "PartClass", isDefinition: true, name: outputName, content: content[2], contentLength: content.length}
             }
             else {
             
-            	return {type: "PartClass", isDefinition: true, name: name.join(''), content: null, contentLength: 0}
+            	return {type: "PartClass", isDefinition: true, name: outputName, content: null, contentLength: 0}
             }
         },
         peg$c2 = ":",
@@ -168,6 +185,22 @@
             
             var multiArray = multi.join();
             var single = true;
+            var outputName;
+            var outputInstanceOf;
+
+        	if (name[0] === "'") {
+            	outputName = name[1].join('');
+            }
+            else {
+            	outputName = name.join('');
+            }
+            
+            if (instanceOf[0] === "'") {
+            	outputInstanceOf = instanceOf[1].join('');
+            }
+            else {
+            	outputInstanceOf = instanceOf.join('');
+            }
             
             for (var i = 0; i < multiArray.length; i++) {
             	if (multiArray[i] === ".") {
@@ -177,18 +210,18 @@
             }
             
             if (!Array.isArray(multi) || !multi.length) {
-                return {type: "PartClass", isDefinition: false, name: name.join(''), instanceOf: instanceOf.join(''), multi: null, content: null, contentLength: 0}
+                return {type: "PartClass", isDefinition: false, name: outputName, instanceOf: outputInstanceOf, multi: null, content: null, contentLength: 0}
             }
             else if(single) {
                 var digit = multi[0][1]
-                return {type: "PartClass", isDefinition: false, name: name.join(''), instanceOf: instanceOf.join(''), multi: digit.join(''), content: null, contentLength: 0}
+                return {type: "PartClass", isDefinition: false, name: outputName, instanceOf: outputInstanceOf, multi: digit.join(''), content: null, contentLength: 0}
 
             	
             }
             else {
             	var firstDigit = multi[0][1]
                 var secondDigit = multi[0][2][0][1]
-            	return {type: "PartClass", isDefinition: false, name: name.join(''), instanceOf: instanceOf.join(''), multi: firstDigit.join('') + ".." + secondDigit.join(''), content: null, contentLength: 0}
+            	return {type: "PartClass", isDefinition: false, name: outputName, instanceOf: instanceOf.join(''), multi: firstDigit.join('') + ".." + secondDigit.join(''), content: null, contentLength: 0}
             }
         },
         peg$c5 = function(package_block) {return package_block},

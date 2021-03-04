@@ -10,9 +10,8 @@ var filePath = require.resolve('../ParserTestCases/sysmlTest-1.sysml');
 var fileContent = fs.readFileSync(filePath,'utf8');
 */
 
-
-var SYSML_OBJECTS = [];
-var TOP_LEVEL_OBJECTS = [];
+var SYSML_OBJECTS = [];     // SysML Objects saved directrly to an array
+var TOP_LEVEL_OBJECTS = []; // SysML Objects saved in a nested fashion 
 
 /**
  * Prints the results of parsing some input
@@ -147,6 +146,8 @@ function createObjects(parseResult) {
     }
 }
 
+// TODO: An attempt at printing parseContent recursivally, needs further work
+/*
 function printObjects(parseContent, lvl, pos) {
 
     console.log(lvl + "." + pos);
@@ -162,3 +163,4 @@ function printObjects(parseContent, lvl, pos) {
 
     console.log(lvl);
 }
+*/
