@@ -1,3 +1,5 @@
+// NOTE: The code below in the comment block is for Node.js testing
+/*
 var Parser = require('../SysmlParser.js');
 var GenericObject = require('../../Object Definitions/GenericObject.js');
 var PackageObject = require('../../Object Definitions/Package.js');
@@ -6,9 +8,10 @@ var PartObject = require('../../Object Definitions/Part.js');
 var fs = require('fs');
 var filePath = require.resolve('../ParserTestCases/sysmlTest-1.sysml');
 var fileContent = fs.readFileSync(filePath,'utf8');
+*/
 
-var SYSML_OBJECTS = [];
-var TOP_LEVEL_OBJECTS = [];
+var SYSML_OBJECTS = [];     // SysML Objects saved directrly to an array
+var TOP_LEVEL_OBJECTS = []; // SysML Objects saved in a nested fashion 
 
 /**
  * Prints the results of parsing some input
@@ -50,19 +53,19 @@ function createObjects(parseResult) {
         if (parseResult[i] !== undefined) {
             switch (parseResult[i].type) {
                 case 'PackageClass':
-                    var packageObj = new PackageObject(parseResult[i].name, parseResult[i].type, null, null, null);
+                    var packageObj = new Package(parseResult[i].name, parseResult[i].type, null, null, null);
                     SYSML_OBJECTS.push(packageObj);
                     TOP_LEVEL_OBJECTS.push(packageObj);
                     break;
                 case 'PartClass':
 
                     if (parseResult[i].isDefinition) {
-                        var partObj = new PartObject(parseResult[i].name, parseResult[i].type, true, null, null);
+                        var partObj = new Part(parseResult[i].name, parseResult[i].type, true, null, null);
                         SYSML_OBJECTS.push(partObj);
                         TOP_LEVEL_OBJECTS.push(partObj);
                     }
                     else {
-                        var partObj = new PartObject(parseResult[i].name, parseResult[i].type, false, null, null)
+                        var partObj = new Part(parseResult[i].name, parseResult[i].type, false, null, null)
                         SYSML_OBJECTS.push(partObj);
                         TOP_LEVEL_OBJECTS.push(partObj);
                     }
@@ -82,25 +85,25 @@ function createObjects(parseResult) {
 
                 switch (parseResult[i].content[j].type) {
                     case 'PackageClass':
-                        var packageObj = new PackageObject(parseResult[i].content[j].name, parseResult[i].content[j].type, null, parseResult[i].name, null);
+                        var packageObj = new Package(parseResult[i].content[j].name, parseResult[i].content[j].type, null, TOP_LEVEL_OBJECTS[i], null);
                         SYSML_OBJECTS.push(packageObj);
                         TOP_LEVEL_OBJECTS[i].addChild(packageObj);
                         break;
                     case 'PartClass':
 
                         if (parseResult[i].content[j].isDefinition) {
-                            var partObj = new PartObject(parseResult[i].content[j].name, parseResult[i].content[j].type, true, parseResult[i].name, null);
+                            var partObj = new Part(parseResult[i].content[j].name, parseResult[i].content[j].type, true, TOP_LEVEL_OBJECTS[i], null);
                             SYSML_OBJECTS.push(partObj);
                             TOP_LEVEL_OBJECTS[i].addChild(partObj);
                         }
                         else {
-                            var partObj = new PartObject(parseResult[i].content[j].name, parseResult[i].content[j].type, false, parseResult[i].name, parseResult[i].content[j].instanceOf);
+                            var partObj = new Part(parseResult[i].content[j].name, parseResult[i].content[j].type, false, TOP_LEVEL_OBJECTS[i], parseResult[i].content[j].instanceOf);
                             SYSML_OBJECTS.push(partObj);
                             TOP_LEVEL_OBJECTS[i].addChild(partObj);
                         }
                         break;
                     default:
-                        var genericObj = new GenericObject(parseResult[i].content[j].name, parseResult[i].content[j].type, null, parseResult[i].name, null);
+                        var genericObj = new GenericObject(parseResult[i].content[j].name, parseResult[i].content[j].type, null, TOP_LEVEL_OBJECTS[i], null);
                         SYSML_OBJECTS.push(genericObj);
                         TOP_LEVEL_OBJECTS[i].addChild(genericObj);
                         break;
@@ -114,25 +117,25 @@ function createObjects(parseResult) {
 
                     switch (parseResult[i].content[j].content[k].type) {
                         case 'PackageClass':
-                            var packageObj = new PackageObject(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, null, parseResult[i].content[j].name, null);
+                            var packageObj = new Package(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, null, TOP_LEVEL_OBJECTS[i].children[j], null);
                             SYSML_OBJECTS.push(packageObj);
                             TOP_LEVEL_OBJECTS[i].children[j].addChild(packageObj);
                             break;
                         case 'PartClass':
         
                             if (parseResult[i].content[j].content[k].isDefinition) {
-                                var partObj = new PartObject(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, true, parseResult[i].content[j].name, null);
+                                var partObj = new Part(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, true, TOP_LEVEL_OBJECTS[i].children[j], null);
                                 SYSML_OBJECTS.push(partObj);
                                 TOP_LEVEL_OBJECTS[i].children[j].addChild(partObj);
                             }
                             else {
-                                var partObj = new PartObject(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, false, parseResult[i].content[j].name, parseResult[i].content[j].content[k].instanceOf);
+                                var partObj = new Part(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, false, TOP_LEVEL_OBJECTS[i].children[j], parseResult[i].content[j].content[k].instanceOf);
                                 SYSML_OBJECTS.push(partObj);
                                 TOP_LEVEL_OBJECTS[i].children[j].addChild(partObj);
                             }
                             break;
                         default:
-                            var genericObj = new GenericObject(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, null, parseResult[i].content[j].name, null);
+                            var genericObj = new GenericObject(parseResult[i].content[j].content[k].name, parseResult[i].content[j].content[k].type, null, TOP_LEVEL_OBJECTS[i].children[j], null);
                             SYSML_OBJECTS.push(genericObj);
                             TOP_LEVEL_OBJECTS[i].children[j].addChild(genericObj);
                             break;
@@ -143,27 +146,22 @@ function createObjects(parseResult) {
     }
 }
 
-function printObjects(parseContent) {
+
+// TODO: An attempt at printing parseContent recursivally, needs further work
+/*
+function printObjects(parseContent, lvl, pos) {
+
+    console.log(lvl + "." + pos);
+    console.log(parseContent);
 
     for (i = 0; i < parseContent.length; i++) {
 
-        console.log(parseContent);
+        if (parseContent[i].children.length !== 0) {
+
+            printObjects(parseContent[i].children, lvl+1)
+        }
     }
 
-    console.log();
+    console.log(lvl);
 }
-
-var parseResult = Parser.parse(fileContent);
-//printParseResult(parseResult);
-//console.log("\n\n\n");
-
-createObjects(parseResult);
-printObjects(TOP_LEVEL_OBJECTS);
-
-/*
-console.log(TOP_LEVEL_OBJECTS);
-console.log("\n\n");
-console.log(TOP_LEVEL_OBJECTS[0].children);
-console.log("\n\n");
-console.log(TOP_LEVEL_OBJECTS[1].children);
 */

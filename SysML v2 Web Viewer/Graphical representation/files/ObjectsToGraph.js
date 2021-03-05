@@ -3,8 +3,12 @@
  * Test function will remove
  * @param {container} container usually a div, required for making a graph
  */
-function main2(container){
-    createGraph(container);
+function loopTopLevelArray(){
+    
+    for(var j = 0; j < TOP_LEVEL_OBJECTS.length; j++){
+         interpretObject(TOP_LEVEL_OBJECTS[j]);
+    }
+    /*
     var testobject = new Part("what", "the", true, null);
     var testobject2 = new Part("2", "the", true, testobject);
     var testobject3 = new Part("3", "the", true, testobject);
@@ -12,7 +16,8 @@ function main2(container){
     testobject.addChild(testobject2);
     testobject.addChild(testobject3);
     testobject2.addChild(testobject4);
-    interpretObject(testobject);
+    console.log(testobject);
+    interpretObject(testobject);*/
 }
 
 /**
@@ -24,11 +29,12 @@ function interpretObject(object){
     var parent;
     try {
         parent = object.parent.graphObject;
+        
     }
     catch{
         parent = null;
     }
-    var test = addObject(sysmlGraph, parent, object.name, 100, 80);
+    var test = drawObject(sysmlGraph, parent, object.name, 100, 80);
     object.setGraphObject(test);
 
     if(object.children.length != 0){

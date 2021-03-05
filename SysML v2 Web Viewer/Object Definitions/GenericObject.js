@@ -13,7 +13,7 @@ class GenericObject{
         this.isDefinition = isDefinition;
         this.children = [];
         this.parent = parent;
-        this.graphObject;
+        this.graphObject = null;
         this.instanceOf = instanceOf;
     }
     getName(){
@@ -36,6 +36,10 @@ class GenericObject{
         return this.instanceOf;
     }
 
+    getChildren(){
+        return this.children;
+    }
+
     addChild(child){
         this.children.push(child);
     }
@@ -45,4 +49,6 @@ class GenericObject{
     }
 }
 
-
+/*
+module.exports = GenericObject;  // TODO: REMOVE WHEN DONE WITH Node.js TESTING!!!
+*/

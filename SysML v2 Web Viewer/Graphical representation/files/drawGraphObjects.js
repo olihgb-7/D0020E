@@ -38,14 +38,14 @@ mxPolyline.prototype.constraints = null;
 
 
 /**
- * addObject creates a vertex from mxGraph based on the input, returns this vertex as an object
+ * drawObject creates a vertex from mxGraph based on the input, returns this vertex as an object
  * @param {graphObject} graph a graph object which can be created using createGraph()
  * @param {graphObject} parent can be a graph object or default parent
  * @param {String} name name for vertex
  * @param {Int} posx position on x-axis
  * @param {Int} posy position on y-axis
  */
-function addObject(graph, parent, name, posx, posy){
+function drawObject(graph, parent, name, posx, posy){
 
     if (parent == null){
         parent = graph.getDefaultParent();
