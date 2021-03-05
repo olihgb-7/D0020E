@@ -45,4 +45,6 @@ class GenericObject{
     }
 }
 
-
+/*
+module.exports = GenericObject;  // TODO: REMOVE WHEN DONE WITH Node.js TESTING!!!
+*/
