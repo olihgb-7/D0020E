@@ -45,7 +45,7 @@ mxPolyline.prototype.constraints = null;
  * @param {Int} posx position on x-axis
  * @param {Int} posy position on y-axis
  */
-function drawObject(graph, parent, name, posx, posy){
+function drawObject(graph, parent, name, sizex, sizey){
 
     if (parent == null){
         parent = graph.getDefaultParent();
@@ -53,7 +53,8 @@ function drawObject(graph, parent, name, posx, posy){
 
     graph.getModel().beginUpdate();
     try{
-        var v1 = graph.insertVertex(parent, null, name, posx, posy, 100, 70);
+        var v1 = graph.insertVertex(parent, null, name, 0, 0, sizex, sizey);
+        layout.execute(parent);
     }
     finally{
         graph.getModel().endUpdate();
@@ -72,6 +73,7 @@ function drawEdge(graph, v1, v2){
     graph.getModel().beginUpdate();
     try{
         var e1 = graph.insertEdge(parent, null, '', v1, v2);
+        layout.execute(parent);
     }
     finally{
         graph.getModel().endUpdate();
@@ -80,6 +82,8 @@ function drawEdge(graph, v1, v2){
 
 //Vital global variable that represents the graph that we draw everything in
 var sysmlGraph;
+var layout;
+var layout2;
 
 
 /**
@@ -90,4 +94,6 @@ function createGraph(container){
     // Creates the graph inside the given container
     sysmlGraph = new mxGraph(container);
     sysmlGraph.setConnectable(false);
+    layout = new mxHierarchicalLayout(sysmlGraph, mxConstants.DIRECTION_NORTH);
+    layout2 = new mxHierarchicalLayout(sysmlGraph, mxConstants.DIRECTION_NORTH);
 }
