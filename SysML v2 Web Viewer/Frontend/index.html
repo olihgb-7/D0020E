@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <title>SysML v2 Web Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		mxBasePath = '../Graphical representation/src';
+	</script>
+
+	<!-- Loads and initializes the library -->
+
+    <script type="text/javascript" src="../Graphical representation/src/js/mxClient.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript" src="../Graphical representation/files/drawGraphObjects.js"></script>
+	<script src="../Graphical representation/files/ObjectsToGraph.js"></script>
+	<script src="../Object Definitions/GenericObject.js"></script>
+	<script src="../Object Definitions/Part.js"></script>
+    
+</head>
+<body onload="main2(document.getElementById('graphContainer'))">
+
+
+<div class="jumbotron jumbotron-fluid">
+    
+    <form method="post" action="../Graphical representation/files/part.html">
+        <label for="fileToUpload">Select a sysML file:</label>
+        <input type="file" id="fileToUpload" name="fileToUpload">   
+        <input type="submit" value="Upload">
+    </form>
+    
+</div>
+
+<div class="container-fluid" >
+    <div id="graphContainer" style="position:relative;overflow:hidden;min-width:500px;min-height:600px;cursor:default;"></div>
+</div>
+    
+
+
+</body>
+</html>
