@@ -24,26 +24,56 @@
 	<script src="../Graphical representation/files/ObjectsToGraph.js"></script>
 	<script src="../Object Definitions/GenericObject.js"></script>
 	<script src="../Object Definitions/Part.js"></script>
+    <script src="../Object Definitions/Package.js"></script>
+
+    <script type="text/javascript" src="../Parser/SysmlParser.js"></script>
+    <script type="text/javascript" src="../Parser/ParseHandlers/ParseHandler.js"></script>
     
 </head>
-<body onload="main2(document.getElementById('graphContainer'))">
+<body onload="createGraph(document.getElementById('graphContainer'))">
 
 
 <div class="jumbotron jumbotron-fluid">
     
-    <form method="post" action="../Graphical representation/files/part.html">
-        <label for="fileToUpload">Select a sysML file:</label>
-        <input type="file" id="fileToUpload" name="fileToUpload">   
-        <input type="submit" value="Upload">
-    </form>
+    
+    <label for="fileToUpload">Select a sysML file:</label>
+    <input type="file" id="fileToUpload" name="fileToUpload">   
+    <input type="submit" value="Upload" id="Upload">
+
     
 </div>
 
 <div class="container-fluid" >
-    <div id="graphContainer" style="position:relative;overflow:hidden;min-width:500px;min-height:600px;cursor:default;"></div>
+    <div id="graphContainer" style="position:relative;overflow:hidden;min-width:2000px;min-height:2000px;cursor:default;"></div>
 </div>
     
+<script type="text/javascript">
 
+    var fr = new FileReader();
+    var parseResult;
+    var filenName;
+
+    document.getElementById('fileToUpload').onchange = function () {  
+                    
+        fileName = this.value.replace(/.*[\/\\]/, '');
+
+        TOP_LEVEL_OBJECTS = [];
+        
+        if (fileName.split('.')[1] == "sysml") {
+
+            fr.onload=function(e){ 
+
+                parseResult = PARSER.parse(fr.result);
+
+                createObjects(parseResult);
+                loopTopLevelArray();
+                console.log(TOP_LEVEL_OBJECTS);    
+            } 
+
+            fr.readAsText(this.files[0]); 
+        }
+    };
+</script>
 
 </body>
 </html>
