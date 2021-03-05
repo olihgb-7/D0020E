@@ -38,7 +38,7 @@
     
     <label for="fileToUpload">Select a sysML file:</label>
     <input type="file" id="fileToUpload" name="fileToUpload">   
-    <input type="submit" value="Upload" id="Upload">
+    
 
     
 </div>
@@ -67,6 +67,8 @@
 
                 createObjects(parseResult);
                 loopTopLevelArray();
+                //drawEdge(sysmlGraph, TOP_LEVEL_OBJECTS[0].graphObject, TOP_LEVEL_OBJECTS[1].graphObject);
+                
                 console.log(TOP_LEVEL_OBJECTS);    
             } 
 
