@@ -34,9 +34,26 @@ function interpretObject(object){
     catch{
         parent = null;
     }
-    var test = drawObject(sysmlGraph, parent, object.name, 100, 80);
-    object.setGraphObject(test);
 
+    if(object.type == "PackageClass"){
+        var test = drawObject(sysmlGraph, parent, object.name, 400, 300);
+        object.setGraphObject(test);
+    }else{
+        if(parent != null){
+            try{
+                var test2 = drawObject(sysmlGraph, object.parent.parent.graphObject, object.name, 80, 80);
+                object.setGraphObject(test2);
+                drawEdge(sysmlGraph, object.graphObject, object.parent.graphObject);
+                layout.execute(object.parent.parent.graphObject, object.graphObject);
+                layout2.execute(object.parent.parent.graphObject);
+            }catch{
+                var test3 = drawObject(sysmlGraph, parent, object.name, 80, 80);
+                object.setGraphObject(test3);
+            }
+            
+        }
+    }
+    
     if(object.children.length != 0){
         for(var i = 0; i < object.children.length; i++){
             interpretObject(object.children[i]);
