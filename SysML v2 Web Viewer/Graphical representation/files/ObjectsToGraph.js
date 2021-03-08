@@ -45,7 +45,6 @@ function interpretObject(object){
                 object.setGraphObject(test2);
                 drawEdge(sysmlGraph, object.graphObject, object.parent.graphObject);
                 layout.execute(object.parent.parent.graphObject, object.graphObject);
-                layout2.execute(object.parent.parent.graphObject);
             }catch{
                 var test3 = drawObject(sysmlGraph, parent, object.name, 80, 80);
                 object.setGraphObject(test3);
