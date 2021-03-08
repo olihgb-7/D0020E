@@ -40,11 +40,90 @@ function printParseResult(parseResult) {
 }
 
 
+/* 
+ * Creates Object Definitions based on parser input in a recursive manner
+ * @param {*} parseResult - The output from a parser that should be translated to Sysml Objects
+ * @param {*} parent - Should be set to null when invoking method! 
+ */
+function createObjects(parseResult, parent) {
+
+    for (var i = 0; i < parseResult.length; i++) {
+
+        if (parent === null && i === 0) {
+            console.log("RECURSIVE createObjects METHOD IS RUNNING!");
+        }
+
+        var tempParent = parent;
+
+        if (parseResult[i] !== undefined) {
+
+            //console.log(i);
+            //console.log(parseResult[i]);
+            //console.log(TOP_LEVEL_OBJECTS[i]);
+
+            switch (parseResult[i].type) {
+                case 'PackageClass':
+                    var packageObj = new Package(parseResult[i].name, parseResult[i].type, null, parent, null);
+                    
+                    if (tempParent === null) {
+                        TOP_LEVEL_OBJECTS.push(packageObj);
+                    }
+                    else {
+                        tempParent.addChild(packageObj);
+                    }
+                    
+                    tempParent = packageObj;
+                    break;
+                case 'PartClass':
+
+                    if (parseResult[i].isDefinition) {
+                        var partObj = new Part(parseResult[i].name, parseResult[i].type, true, parent, null);
+                    }
+                    else {
+                        var partObj = new Part(parseResult[i].name, parseResult[i].type, false, parent, null)
+                    }
+
+                    if (tempParent === null) {
+                        TOP_LEVEL_OBJECTS.push(partObj);
+                    }
+                    else {
+                        tempParent.addChild(partObj);
+                    }
+
+                    tempParent = partObj;
+                    break;
+                default:
+                    var genericObj = new GenericObject(parseResult[i].name, parseResult[i].type, null, parent, null);
+                    
+                    if (tempParent === null) {
+                        TOP_LEVEL_OBJECTS.push(genericObj);
+                    }
+                    else {
+                        tempParent.addChild(genericObj);
+                    }
+
+                    tempParent = genericObj;
+                    break;
+            }    
+        }
+
+        if (parseResult[i].content !== null) {
+            createObjects(parseResult[i].content, tempParent);
+        }
+    }
+}
+
+
 /**
+ * OLD CODE FOR ITERATIVELLY CREATING SYSML OBJECTS FROM PARSING RESULTS
+ * NOT IN USE - BUT STILL HAVE THIS CODE IN CASE THE RECURSION METHOD SOULD BREAK
+ * 
  * Creates Object Definitions based on parser input
  * NOTE: At the moment only a depth of 3 levels of nestled objects are supported!
  * @param {*} parseResult 
  */
+
+ /*
 function createObjects(parseResult) {
 
     // Top-level objects
@@ -144,24 +223,5 @@ function createObjects(parseResult) {
             }
         }
     }
-}
-
-
-// TODO: An attempt at printing parseContent recursivally, needs further work
-/*
-function printObjects(parseContent, lvl, pos) {
-
-    console.log(lvl + "." + pos);
-    console.log(parseContent);
-
-    for (i = 0; i < parseContent.length; i++) {
-
-        if (parseContent[i].children.length !== 0) {
-
-            printObjects(parseContent[i].children, lvl+1)
-        }
-    }
-
-    console.log(lvl);
 }
 */

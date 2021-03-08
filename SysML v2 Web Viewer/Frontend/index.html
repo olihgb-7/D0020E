@@ -37,7 +37,7 @@
     
     
     <label for="fileToUpload">Select a sysML file:</label>
-    <input type="file" id="fileToUpload" name="fileToUpload">   
+    <input type="file" id="fileToUpload" name="fileToUpload" accept=".sysml">   
     
 
     
@@ -65,7 +65,7 @@
 
                 parseResult = PARSER.parse(fr.result);
 
-                createObjects(parseResult);
+                createObjects(parseResult, null);
                 loopTopLevelArray();
                 //drawEdge(sysmlGraph, TOP_LEVEL_OBJECTS[0].graphObject, TOP_LEVEL_OBJECTS[1].graphObject);
                 
