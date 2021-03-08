@@ -45,8 +45,6 @@ function printParseResult(parseResult) {
  * @param {*} parseResult - The output from a parser that should be translated to Sysml Objects
  * @param {*} parent - Should be set to null when invoking method! 
  */
-
- 
 function createObjects(parseResult, parent) {
 
     for (var i = 0; i < parseResult.length; i++) {
