@@ -10,7 +10,7 @@ GenericObject contains all of the important functions at the moment. Each instan
 
 The Part and Package classes don't contain any additional functionality at the moment however the idea was to keep any part or package specific functionality within these classes and all common or general functions within the GenericObject class.
 
-The objects are created when the parse handler runs through the output from the parser. The parse handler then creates objects based on the input and puts all the objects into the SYSML_OBJECTS array and the highest level objects into the TOP_LEVEL_OBJECTS array. The TOP_LEVEL_OBJECTS array is used for drawing the diagram and is detailed within the Graphical Representation documentation.
+The objects are created when the parse handler runs through the output from the parser. The parse handler then creates objects based on the input and puts all the objects into the SYSML_OBJECTS array and the highest level objects into the TOP_LEVEL_OBJECTS array. The TOP_LEVEL_OBJECTS array is used for drawing the diagram and how it is drawn is detailed within the Graphical Representation documentation.
 
 For future development, more and more object definitions are gonna have to be created and the GenericObject needs to be expanded with more functionalities. We created a class diagram that contains the plans we had for the rest of the functions from SysML v2 at the time of this project. This class diagram was created to the best of our ability and our understanding of SysML v2 however due to time constraints we cannot guarantee that what the class diagram contains is perfect as our understanding of SysML v2 could very well have flaws.
 
