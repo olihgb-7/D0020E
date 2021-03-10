@@ -3,12 +3,11 @@ Project in Computer Science - SysML 2.0 Viewer in a Browser
 
 
 ## General parser documentation
-In this project we choose to implement a [parser generator](#Parser-generator) to build a fully functional [PEG parser](https://en.wikipedia.org/wiki/Parsing_expression_grammar). This generated parser (SysmlParser.js) is used to parse the .sysml files and creates JavaScript objects of the parsed result. The parser is then deployed in a [parse handler](#Parse-handler) (ParseHandler.js) together with predefined SysML object definitions (defined in their own JavaScript files in the "SysML v2 Web Viewer/Object Definitions" folder) which creates SysML objects based on the parsed result and the predefined SysML object definitions. These SyML objects are then recursively saved to an objects array called `TOP_LEVEL_OBJECTS` which allows the use of pure JavaScript based SysML objects in other parts of the application. 
+In this project we choose to implement a [parser generator](#Parser-generator) to build a fully functional [PEG parser](https://en.wikipedia.org/wiki/Parsing_expression_grammar). This generated parser (SysmlParser.js) is used to parse .sysml documents and create JavaScript objects of the parsed result. The parser is then deployed in a [parse handler](#Parse-handler) (ParseHandler.js) together with predefined SysML object definitions (defined in their own JavaScript files in the "SysML v2 Web Viewer/Object Definitions" folder) which creates SysML objects based on the parsed result and the predefined SysML object definitions. These SyML objects are then recursively saved to an objects array called `TOP_LEVEL_OBJECTS` which allows the use of pure JavaScript based SysML objects in other parts of the application. 
 
 This procedure is illustrated in the figure below.
 
 ![ParserConnection](ParserConnection.png "Parser Connection Procedure")
-
 
 ## Parser generator
 The parser generator used is a JavaScript based parser generator called [PEG.js](https://pegjs.org/). PEG.js works by generating a parser (SysmlParser.js) from grammar rules implemented in a .pegjs document (Grammar.pegjs) that describes expected input and can specify what the parser returns. This means that there is no need to write an actual parser, only the grammatical rule sets that the expected input should conform by.
@@ -34,6 +33,17 @@ Depending on if the parser that is generated should be used with pure JavaScript
 **Pure JavaScript:** Set the following flags: `--format globals -e window.PARSER`  
 **Node.js:** No need to set any specific flags.
 
+## Grammar
+For this current implementation of the rule sets in the Grammar.pegjs document the only criteria is it has to parse .sysml documents written in the Eclipse IDE and of course by extension also conform to the official SysML v2 syntax. However since the .sysml documents that are parsed are first written in the Eclipse IDE a somewhat looser parsing approach has been taken, i.e some constraints does not need to be checked since we know that the input has already been cleared in the Eclipse IDE. An example of this is:
+```
+package Package1 {
+
+    part engine : Engine;
+}
+```
+This piece of .sysml input would be parsed by the parser even though the part `Engine` is not defined. But since we first write the .sysml document in the Eclipse IDE we know that this code would not be correct and thus we can assume that the parser would not even get this kind of .sysml document in the first place.
+
+This approach greatly simplifies the implementation of rule sets, but it does not make a strong parser if the criteria of first writing the .sysml documents in Eclipse IDE is to be removed. A suggestion would be to work on stronger parsing rules to make sure that the generated parser is future proof.
 
 ## Parse handler
 The current state of the parse handler (ParseHandler.js) contains the following:
@@ -41,7 +51,7 @@ The current state of the parse handler (ParseHandler.js) contains the following:
 - A `createObjects(parseResult, parent)` function that recursively creates SysML objects and populates the `TOP_LEVEL_OBJECTS` array. The `TOP_LEVEL_OBJECTS` array only contains the SysML objects on the top level and the function then recursively populates each objects `children` arrays with its children 
 - A global `TOP_LEVEL_OBJECTS` array that contains a nested structure of the SysML objects created by the `createObjects()` function
 
-**Our interpritation of children and parents:**  
+**Our interpretation of children and parents:**  
 A child to a SysML object refers to any SysML object contained within its own code block. A parent is therefor the SysML object that another SysML object is contained within.  
 Example:
 ```
