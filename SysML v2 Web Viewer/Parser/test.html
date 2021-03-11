@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Parser Test</title>
+        <script type="text/javascript" src="../Object Definitions/GenericObject.js"></script>
+        <script type="text/javascript" src="../Object Definitions/Package.js"></script>
+        <script type="text/javascript" src="../Object Definitions/Part.js"></script>
+        <script type="text/javascript" src="SysmlParser.js"></script>
+        <script type="text/javascript" src="ParseHandlers/ParseHandler.js"></script>
+    </head>
+    <body>
+
+        <input type="file" name="inputfile" id="inputfile"> 
+        <button type="button" onclick="console.log(TOP_LEVEL_OBJECTS)">Console.log(TOP_LEVEL_OBJECTS)</button>
+
+        <script type="text/javascript">
+
+            var fr = new FileReader();
+            var parseResult;
+            var filenName;
+
+            document.getElementById('inputfile').onchange = function () {  
+                            
+                fileName = this.value.replace(/.*[\/\\]/, '');
+
+                TOP_LEVEL_OBJECTS = [];
+                
+                if (fileName.split('.')[1] == "sysml") {
+
+                    fr.onload=function(e){ 
+
+                        parseResult = PARSER.parse(fr.result);
+
+                        createObjects(parseResult, null);
+                        console.log(TOP_LEVEL_OBJECTS);    
+                    } 
+
+                    fr.readAsText(this.files[0]); 
+                }
+            };
+        </script>
+    </body>
+</html>

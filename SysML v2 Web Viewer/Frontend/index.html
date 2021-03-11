@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <title>SysML v2 Web Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		mxBasePath = '../Graphical representation/src';
+	</script>
+
+	<!-- Loads and initializes the library -->
+
+    <script type="text/javascript" src="../Graphical representation/src/js/mxClient.js"></script>
+
+	<!-- Example code -->
+	<script type="text/javascript" src="../Graphical representation/files/drawGraphObjects.js"></script>
+	<script src="../Graphical representation/files/ObjectsToGraph.js"></script>
+	<script src="../Object Definitions/GenericObject.js"></script>
+	<script src="../Object Definitions/Part.js"></script>
+    <script src="../Object Definitions/Package.js"></script>
+
+    <script type="text/javascript" src="../Parser/SysmlParser.js"></script>
+    <script type="text/javascript" src="../Parser/ParseHandlers/ParseHandler.js"></script>
+    
+</head>
+<body onload="createGraph(document.getElementById('graphContainer'))">
+
+
+<div class="jumbotron jumbotron-fluid">
+    
+    
+    <label for="fileToUpload">Select a sysML file:</label>
+    <input type="file" id="fileToUpload" name="fileToUpload" accept=".sysml">   
+    
+
+    
+</div>
+
+<div class="container-fluid" >
+    <div id="graphContainer" style="position:relative;overflow:hidden;min-width:2000px;min-height:2000px;cursor:default;"></div>
+</div>
+    
+<script type="text/javascript">
+
+    var fr = new FileReader();
+    var parseResult;
+    var filenName;
+
+    document.getElementById('fileToUpload').onchange = function () {  
+                    
+        fileName = this.value.replace(/.*[\/\\]/, '');
+
+        TOP_LEVEL_OBJECTS = [];
+        
+        if (fileName.split('.')[1] == "sysml") {
+
+            fr.onload=function(e){ 
+
+                parseResult = PARSER.parse(fr.result);
+
+                createObjects(parseResult, null);
+                loopTopLevelArray();
+                //drawEdge(sysmlGraph, TOP_LEVEL_OBJECTS[0].graphObject, TOP_LEVEL_OBJECTS[1].graphObject);
+                
+                console.log(TOP_LEVEL_OBJECTS);    
+            } 
+
+            fr.readAsText(this.files[0]); 
+        }
+    };
+</script>
+
+</body>
+</html>

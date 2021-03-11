@@ -1,4 +1,5 @@
-var GenericObject = require('./GenericObject.js');
+// var GenericObject = require('./GenericObject.js');
+
 class Part extends GenericObject {
 
     createConnection(v){
@@ -6,10 +7,6 @@ class Part extends GenericObject {
     }
 }
 
-var test = new Part("what", "the", true, "fuck");
-
-console.log(test.getName());
-console.log(test.getObjectType());
-console.log(test.getParent());
-
-module.exports = Part;
+/*
+module.exports = Part; // TODO: REMOVE WHEN DONE WITH Node.js TESTING!!!
+*/

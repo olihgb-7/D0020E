@@ -1,10 +1,12 @@
 package NewPackage {
 
-    part outer1: Outer1;
+    part def Engine;
+
+    part outer1 : OUTER1;
 
     part def OuterPart1 {
 
-        part inner1 : inner1;
+        part inner1 : INNER1;
 
         part def InnerPart1 {
 
@@ -17,8 +19,13 @@ package NewPackage {
 
         }
 
-        part inner2 : inner2;
+        part inner2 : INNER2;
     }
 
-    part outer2: Outer2;
+    part outer2: OUTER2;
+}
+
+package NewPackage2 {
+
+    part test : TEST;
 }
