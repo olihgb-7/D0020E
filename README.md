@@ -1,6 +1,56 @@
 # D0020E
 Project in Computer Science - SysML 2.0 Viewer in a Browser
 
+## About the SysML 2.0 Viewer in a Browser (aka SysML v2 Web Viewer)
+The SysML v2 Web Viewer is an application that is used to display SysML v2 diagrams that can be interacted with via a web browser. The idea is that a .sysml file is read by the application which then displays the contents of the .sysml file as a requested diagram that has the ability to be interacted with in different ways. The application is still only a simple implementation meant to be as a foundation to be built on further. At its current state the application showcases the different tools and libraries used and their potential to be useful parts in further development.  
+
+## Instructions on running the application
+Before installing and running the application it is assumed that a correctly writen .sysml file is already created which can then be provided to the running application. For this project the assumption is that the Eclipse IDE with the PlantUML extension is used to write these .sysml files. And installation for this can be found [here.](https://github.com/Systems-Modeling/SysML-v2-Release/tree/master/install/eclipse)
+
+To "install" the application the "SysML v2 Web Viewer" folder must be downloaded on a local computer. To then use the application the index.html file in the folder "Frontend" located under the "SysML v2 Web Viewer" must be opened within a web browser. Now a .sysml file can be uploaded via the button on the page with the text "Select a sysML file:". After uploading the file the Web Viewer should display the .sysml content on the canvas.  
+
+At the moment only the folowing SysML objects are supported:
+
+- Packages
+- Part definitions
+- Part usage
+
+An example code that can be run follows:
+
+```
+package Test1 {
+	
+	part def HumanDrivenVehicle {
+		
+		part driver : Person;
+	}
+	
+	part def PoweredVehicle {
+		
+		part eng: Engine;
+	}
+	
+	part def Engine;
+	part def Person;
+}
+
+package Test2 {
+
+    part def Vehicle1 {
+		
+		part driver1 : Driver;
+	}
+	
+	part def Vehicle2 {
+		
+		part mot : Motor;
+	}
+	
+	part def Motor;
+	part def Driver;
+}
+```
+
 ## Object Definitions
 Currently there are three types of objects, there's the GenericObject, the Part object and the Package object. The Part and Package objects extend the GenericObject and the plan is for all objects to extend the GenericObject, which contains functions that are universal for most object types.
 
@@ -108,6 +158,7 @@ Now the `TOP_LEVEL_OBJECTS` array should be populated with SysML objects and can
 
 
 ## Useful links:
+[SysML v2 GitHub](https://github.com/Systems-Modeling)  
 [A Guide to Parsing](https://tomassetti.me/guide-parsing-algorithms-terminology/)  
 [Parsing in JavaScript](https://tomassetti.me/parsing-in-javascript/)  
 [Wikipedia Entry on Parsing](https://en.wikipedia.org/wiki/Parsing)  
