@@ -117,3 +117,4 @@ Now the `TOP_LEVEL_OBJECTS` array should be populated with SysML objects and can
 [PEG.js Documentation](https://pegjs.org/documentation)  
 [PEG.js GitHub Repository](https://github.com/pegjs/pegjs)  
 [PEG.js Example Rule Sets](https://github.com/pegjs/pegjs/tree/master/examples)
+[mxGraph Website](https://jgraph.github.io/mxgraph/)
