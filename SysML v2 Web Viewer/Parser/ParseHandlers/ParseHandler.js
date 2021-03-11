@@ -10,12 +10,13 @@ var filePath = require.resolve('../ParserTestCases/sysmlTest-1.sysml');
 var fileContent = fs.readFileSync(filePath,'utf8');
 */
 
-var SYSML_OBJECTS = [];     // SysML Objects saved directrly to an array
-var TOP_LEVEL_OBJECTS = []; // SysML Objects saved in a nested fashion 
+var SYSML_OBJECTS = [];         // SysML Objects saved directly to an array     NOTE: MOSTLY USED FOR DEBUGGING, SHOULD NOT BE USED IN DEVELOPMENT
+var TOP_LEVEL_OBJECTS = [];     // SysML Objects saved in a nested array        NOTE: SHOULD BE USED IN DEVELOPMENT
 
 /**
  * Prints the results of parsing some input
- * NOTE: At the moment only a depth of 3 levels of nestled objects are supported!
+ * NOTE: THIS SHOULD BE REWRITTEN TO A RECURSIVE FUNCTION!
+ *       THIS ONLY GOES DOWN THREE LEVELS!   
  * @param {} parseResult 
  */
 function printParseResult(parseResult) {
@@ -42,29 +43,33 @@ function printParseResult(parseResult) {
 
 /* 
  * Creates Object Definitions based on parser input in a recursive manner
- * @param {*} parseResult - The output from a parser that should be translated to Sysml Objects
- * @param {*} parent - Should be set to null when invoking method! 
+ * @param {*} parseResult - The output from a parser that should be translated to SysML Objects
+ * @param {*} parent - The parent of the parsed content. Should be set to null when invoking method! 
  */
 function createObjects(parseResult, parent) {
 
+    // Go trough every object on the current depth level
     for (var i = 0; i < parseResult.length; i++) {
 
+        // Debug message to make sure that the recursive function is running, not essential...
         if (parent === null && i === 0) {
             console.log("RECURSIVE createObjects METHOD IS RUNNING!");
         }
 
         var tempParent = parent;
 
+        // Make sure that the object is actaully defined
         if (parseResult[i] !== undefined) {
 
-            //console.log(i);
-            //console.log(parseResult[i]);
-            //console.log(TOP_LEVEL_OBJECTS[i]);
-
+            // Decision on what type of object should be created. Based on the parseResult.type
+            // Extend here with new cases when implementing new SysML objects!
             switch (parseResult[i].type) {
                 case 'PackageClass':
                     var packageObj = new Package(parseResult[i].name, parseResult[i].type, null, parent, null);
                     
+                    // If object is top level --> Add to TOP_LEVEL_OBJECTS array
+                    // Else --> Append object to child array of parents
+                    // This creates the nested structure seen in TOP_LEVEL_OBJECTS 
                     if (tempParent === null) {
                         TOP_LEVEL_OBJECTS.push(packageObj);
                     }
@@ -76,6 +81,7 @@ function createObjects(parseResult, parent) {
                     break;
                 case 'PartClass':
 
+                    // Check if PartClass is a definition
                     if (parseResult[i].isDefinition) {
                         var partObj = new Part(parseResult[i].name, parseResult[i].type, true, parent, null);
                     }
@@ -83,6 +89,9 @@ function createObjects(parseResult, parent) {
                         var partObj = new Part(parseResult[i].name, parseResult[i].type, false, parent, null)
                     }
 
+                    // If object is top level --> Add to TOP_LEVEL_OBJECTS array
+                    // Else --> Append object to child array of parents
+                    // This creates the nested structure seen in TOP_LEVEL_OBJECTS 
                     if (tempParent === null) {
                         TOP_LEVEL_OBJECTS.push(partObj);
                     }
@@ -95,6 +104,9 @@ function createObjects(parseResult, parent) {
                 default:
                     var genericObj = new GenericObject(parseResult[i].name, parseResult[i].type, null, parent, null);
                     
+                    // If object is top level --> Add to TOP_LEVEL_OBJECTS array
+                    // Else --> Append object to child array of parents
+                    // This creates the nested structure seen in TOP_LEVEL_OBJECTS 
                     if (tempParent === null) {
                         TOP_LEVEL_OBJECTS.push(genericObj);
                     }
@@ -107,6 +119,8 @@ function createObjects(parseResult, parent) {
             }    
         }
 
+        // Recursively call createObjects as long as the parseResult content is populated
+        // Sends the parseResult content and its parent as parameters with the function call
         if (parseResult[i].content !== null) {
             createObjects(parseResult[i].content, tempParent);
         }
@@ -115,8 +129,8 @@ function createObjects(parseResult, parent) {
 
 
 /**
- * OLD CODE FOR ITERATIVELLY CREATING SYSML OBJECTS FROM PARSING RESULTS
- * NOT IN USE - BUT STILL HAVE THIS CODE IN CASE THE RECURSION METHOD SOULD BREAK
+ * OLD CODE FOR ITERATIVELY CREATING SYSML OBJECTS FROM PARSING RESULTS
+ * NOT IN USE - BUT LEAVING THIS CODE IN CASE THE RECURSION METHOD SHOULD BREAK
  * 
  * Creates Object Definitions based on parser input
  * NOTE: At the moment only a depth of 3 levels of nestled objects are supported!
