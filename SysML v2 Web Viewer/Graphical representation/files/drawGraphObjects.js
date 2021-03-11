@@ -83,7 +83,6 @@ function drawEdge(graph, v1, v2){
 //Vital global variable that represents the graph that we draw everything in
 var sysmlGraph;
 var layout;
-var layout2;
 
 
 /**
@@ -95,5 +94,4 @@ function createGraph(container){
     sysmlGraph = new mxGraph(container);
     sysmlGraph.setConnectable(false);
     layout = new mxHierarchicalLayout(sysmlGraph, mxConstants.DIRECTION_NORTH);
-    layout2 = new mxHierarchicalLayout(sysmlGraph, mxConstants.DIRECTION_NORTH);
 }
