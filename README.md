@@ -62,7 +62,7 @@ The objects are created when the parse handler runs through the output from the 
 
 For future development, more and more object definitions are gonna have to be created and the GenericObject needs to be expanded with more functionalities. We created a class diagram that contains the plans we had for the rest of the functions from SysML v2 at the time of this project. This class diagram was created to the best of our ability and our understanding of SysML v2 however due to time constraints we cannot guarantee that what the class diagram contains is perfect as our understanding of SysML v2 could very well have flaws.
 
-**NOTE:** *The package and parts work fine internally at the moment, the first thing to work on would in our opinion be the graphical representation. However if you wanna do work on the object definitions the first thing should probably be connections.
+**NOTE:** *The package and parts work fine internally at the moment, the first thing to work on would in our opinion be the graphical representation. However if you wanna do work on the object definitions the first thing should probably be connections.*
 
 ## Graphical Represenation
 For drawing the graph, the library mxGraph is used. To make a graph in mxGraph we first need to make a graph object, which we accomplish using our function createGraph which takes a container, in our case a div, as an argument and then creates the graph object sysmlGraph. The object sysmlGraph is global so we can reach it from anywhere. We need to use the graph object when we want to draw our objects.
