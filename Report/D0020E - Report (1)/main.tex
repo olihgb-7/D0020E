@@ -11,11 +11,15 @@
 \usepackage{siunitx} % Package for handling numbers (ex \num{1e6}), units (ex \SI{15,3}{Nm}) and intervals (ex\SIrange{10}{20}{\celcius}) correctly
 \usepackage{appendix}
 \usepackage{hyperref}
+\usepackage{datetime}
 
 \usepackage[style=numeric,backend=biber,sorting=none]{biblatex}
 \DeclareLanguageMapping{english}{english-apa}
 \addbibresource{references.bib}
 \nocite{*}
+
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH], \THEYEAR}
 
 \title{SysML 2.0 Viewer in a Browser}
 \author{Oliver Högberg, \tt olihgb-7@student.ltu.se \\ 
@@ -33,7 +37,7 @@ Magnus Stenfelt, \tt magset-8@student.ltu.se \\
 \\
 \\
 \includegraphics[width=0.3\textwidth]{ltu_swe.jpg}}
-\date{March 2020}
+\date{\monthyeardate\today}
 
 
 \begin{document}
@@ -48,14 +52,15 @@ Magnus Stenfelt, \tt magset-8@student.ltu.se \\
 \subsection{Background}
 When developing large and complex systems it is very important not to lose understanding of the system, however this can be quite a challenge. This is why developers have used some kind of modelling language throughout time. Modelling languages allow for creation of a graphical representation of the system, with varying levels of detail and complexity depending on what the project in question needs. It also allows developers to create and plan the entire system ahead of time, making it easier to avoid messy implementations and improves overall readability. UML \cite{UML}, Unified Modeling Language, is one such language and SysML \cite{SysML}, Systems Modeling Language, is an extension of UML which lets users practice Model-Based Systems Engineering \cite{MBSE} (MBSE).
 \\ \\
-The firs iteration of SysML is a complete modelling language with very useful tools for creating and viewing system models. It is also a graphical modeling language meaning it consists of different types of diagrams which contain information useful for conveying system structures. There is now a new iteration of SysML called SysML v2 which is a purely textual modeling language meaning SysML v2 looks more like a programming language. This creates a problem where less tech-literate users have a very hard time understanding SysML v2 as it has a very steep learning curve and the systems are very hard to visualize. To make SysML v2 more palpable for users of varying technical proficiency tools need to be developed to translate the SysML v2 text to diagrams. There are some tools that accomplish this to some degree, such as Eclipse Papyrus \cite{EclipsePapyrus}, but they are very complicated to install and use making them unsuitable for less tech-literate users.
+The first iteration of SysML is a complete modelling language with very useful tools for creating and viewing system models. It is also a graphical modeling language meaning it consists of different types of diagrams which contain information useful for conveying system structures. There is now a new iteration of SysML called SysML v2 which is a purely textual modeling language meaning SysML v2 looks more like a programming language. This creates a problem where less tech-literate users have a very hard time understanding SysML v2 as it has a very steep learning curve and the systems are very hard to visualize. To make SysML v2 more palpable for users of varying technical proficiency tools need to be developed to translate the SysML v2 text to diagrams. There are some tools that accomplish this to some degree, such as Eclipse Papyrus \cite{EclipsePapyrus}, but they are very complicated to install and use making them unsuitable for less tech-literate users.
 \\ \\
 A proof of concept of an interactive SysML v2 web viewer has been developed in a bachelor thesis at LTU where Jesper Nilsson \cite{Jesper2020} proved that it is possible to render SysML diagrams in a browser. Tommy Andersson \cite{Tommy2020} would later continue the project by building on the proof of concept as a summer job, however it was discovered that a proof of concept does not necessarily scale and their solution could not be developed any further. Additional work is required to restart the project from scratch to avoid these scalability issues. 
 \\ \\
 This is why this current iteration of the project was started, to find a way around the issues that the prior project iterations arrived at and to create a strong foundation towards a finished product; an interactive SysML v2 viewer in a browser.
 
 \subsection{Problem description}
-The task is to create a web viewer for SysML v2. The viewer is supposed to be used by a system designer to create a clearer and easier to understand description of a complex system. In order to accomplish this the application needs to be able to display the diagrams included in SysML v2 based on a input file in the format of a .sysml file. After creating the .sysml file, it will be uploaded to the application and shown as a SysML v2 diagram in a clear and interactive manner. The final product is supposed to have support for a user to: interact with the diagram views; click SysML objects to get to other diagram views and to view specific SysML object functionality.
+%%Uppdaterad efter Jans feedback kan behöva mer arbete
+The task is to create a web viewer for SysML v2. Web viewer in this case means a web-based application to which we can upload the SysML v2 files which then displays interactive SysML diagrams inside of a web-browser. The web viewer is supposed to be used by a system designer to create a clearer and easier to understand description of a complex system. In order to accomplish this the application needs to be able to display the diagrams included in SysML v2 based on a input file in the format of a .sysml file. After creating the .sysml file, it will be uploaded to the application and shown as a SysML v2 diagram in a clear and interactive manner. The final product is supposed to have support for a user to: interact with the diagram views; click SysML objects to get to other diagram views and to view specific SysML object functionality.
 \\\\
 The goal of this project is get an understanding of the SysML v2 language to create an easy to use tool to display future SysML diagrams. Another very important goal, if not the main goal itself, is to create the application in such a way that it can be built upon by other developers in the case of this project not completing the first mentioned goal. The application also has to be able to be built upon due to SysML v2 not being finished and it still being updated. To summarize this to one sentence the project is to create a scalable SysML v2 web viewing tool that is easy to use and understand.
 
@@ -119,7 +124,7 @@ The activity diagram in figure \ref{activity} shows the general functionality of
     \caption{The planned class diagram for the current and future SysML v2 object definitions}
     \label{fig:class_diagram}
 \end{figure}
-The first part of the project was all about planning as far forward as possible. The entire first sprint and part of the second sprint was spent planning for implementation as far as we could. We read through the available SysML v2 documents and tried to fit all of the keywords used in SysML v2 into a class diagram. This diagram, shown in figure \ref{fig:class_diagram}, contains our understanding of SysML v2 and how we would need classes to look to implement SysML v2 functionality in JavaScript. This was created to try to make our development future proof and make it easy to continue for someone else after this project has ended.
+The first part of the project was all about planning as into the future as possible. The entire first sprint, which in the case of the project was a development period of around 3-4 weeks, and part of the second sprint was spent planning for implementation as far as we could. We read through the available SysML v2 documents and tried to fit all of the keywords used in SysML v2 into a class diagram. This diagram, shown in figure \ref{fig:class_diagram}, contains our understanding of SysML v2 and how we would need classes to look to implement SysML v2 functionality in JavaScript. This was created to try to make our development future proof and make it easy to continue for someone else after this project has ended.
 
 
 \begin{figure}[H]
@@ -129,11 +134,11 @@ The first part of the project was all about planning as far forward as possible.
     \label{fig:my_label}
 \end{figure}
 
-The end product that we ended up with was a proof of concept rather than a fully fledged interactive SysML v2 web viewer. At its current state it is only possible to upload a .sysml file containing packages, part definitions and part usages and display them as crude diagrams in a restricted manner. The layout algorithm and placing of the different SysML objects is not implemented yet. There are also no official SysML diagrams that can be shown yet. However there are things that have been implemented that are very important and useful for future work. A parser generator, PEG.js mentioned earlier in section \ref{sec:system_design}, has been used to create a functional PEG parser which provides the basic groundwork regarding parsing for future development on this project and testing of the generator has shown that it is suitable for the task. A generalized foundation of object definitions used to create the SysML objects that can be used for graphical representation has also been created. 
+The end product that we ended up with was a proof of concept rather than a fully fledged interactive SysML v2 web viewer. In its current state it is only possible to upload a .sysml file containing packages, part definitions and part usages and display them as crude diagrams in a restricted manner. The layout algorithm and placing of the different SysML objects is not implemented yet. There are also no official SysML diagrams that can be shown yet. However there are things that have been implemented that are very important and useful for future work. A parser generator, PEG.js mentioned earlier in section \ref{sec:system_design}, has been used to create a functional PEG parser which provides the basic groundwork regarding parsing for future development on this project and testing of the generator has shown that it is suitable for the task. A generalized foundation of object definitions used to create the SysML objects that can be used for graphical representation has also been created. 
 \\\\
 There are a few things that have not been incorporated into the parser at the moment. Specifically the things in the parser that are not yet fully realized and mature are the missing rule-sets for SysML objects other than packages, part definitions and part usages. There are several different functions, rules and more that has to be added for a functioning SysML parser. There is one issue that has been purposely ignored due to an assumption made on our part. What we chose to ignore was checking for errors in the code and assuming that it is correctly written. We can assume this because we expect the .sysml files to be written in the Eclipse IDE \cite{eclipseIDE} where there is a syntax checker already included for the SysML v2 language. 
 \\\\
-The graphical representation was created using a library called mxGraph \cite{mxGraph}. This part of the product is not as developed as most other parts, there were many functions that we wanted to implement but didn't have time for. What we did implement is the very basic ability to draw objects based on information from the parser. It can draw nestled objects within each other but it can only draw the same looking rectangles for all objects, meaning that parts and packages look the same which they shouldn't. Parts within parts are represented using arrows while parts within packages are nestled. When a file is uploaded all the objects are just drawn in the upper left corner stacked on each other instead of placed using a layout algorithm like we planned. While it is possible to move objects and arrows, it doesn't look good. Also it was supposed to be interactive which it isn't at this point. 
+The graphical representation was created using a library called mxGraph \cite{mxGraph}. This part of the product is not as developed as most other parts, there were many functions that we wanted to implement but did not have time for. What we did implement is the very basic ability to draw objects based on information from the parser. It can draw nestled objects within each other but it can only draw the same looking rectangles for all objects, meaning that parts and packages look the same which they should not. Parts within parts are represented using arrows while parts within packages are nestled. When a file is uploaded all the objects are just drawn in the upper left corner stacked on each other instead of placed using a layout algorithm like we planned. While it is possible to move objects and arrows, it does not look good. Also it was supposed to be interactive which it is not at this point. 
 \\\\
 Most of the code and work put into the project has been in the effort to create a solid starting point for future attempts at this web viewer. That has been the goal of this project the entire time. In the end, the goal of this project was not a fully functioning SysML v2 web viewer. As such we did manage to succeed in delivering what was asked of us to deliver; a solid foundation to continue developing on. 
 
@@ -143,9 +148,9 @@ Most of the code and work put into the project has been in the effort to create 
 %Unmasked - changes unmask previously existing bugs.
 %Remote - Changing one part breaks another part of the program. For example, Module A writes to a database. Module B reads from the database. If changes to what Module A writes to the database break Module B, it is remote regression.
 
-\subsubsection{Risks of regression}
+\subsubsection{Risk of regression}
 
-Based off of an interview with Tommy Andersson who previously worked on this project, our design is aiming to be as modular as possible with very distinct and separated classes and methods to offer as much scalability as possible. This, of course, raises the risk for remote regression as a small change in a method may ripple across the entire program. For example we might need to change a method to make it more efficient or if we discover a bug and this seemingly small change could cause much bigger problems since other parts of the program depends on this method. 
+Based off of an interview with Tommy Andersson who previously worked on this project, our design is aiming to be as modular as possible with very distinct and separated classes and methods to provide for the application to be as scalable as possible. This, of course, raises the risk for remote regression as a small change in a method may ripple across the entire program. For example we might need to change a method to make it more efficient or if we discover a bug and this seemingly small change could cause much bigger problems since other parts of the program depends on this method. 
 \\\\
 Due to the fact that the planned implementation of the diagrams involves implementing the diagram one at a time, a big risk of both unmasked and remote regression appears. For example, modifying the parsing code  to include new definitions of SysML v2 functions may unmask bugs that was previously harmless and in turn, the graphical representation might break when implementing these new diagram definitions as well. Creating new definitions can create remote regression in both the graphical representation and the parser as well as creating local regression risks and as such extra care will have to be put into handling new definitions.
 \\\\
@@ -177,7 +182,7 @@ The following table describes our plan for automated unit and system level testi
     \begin{center}
         \includegraphics[width=1\textwidth]{Test-table.png}
         \caption{Table describing automated test stories}
-        \label{package}
+        \label{test-strat}
     \end{center}
 \end{figure}
 
@@ -186,13 +191,13 @@ The following table describes our plan for automated unit and system level testi
 
 Our general strategy for testing has been to try every new function out locally and separate during development. Then try it out with other parts when merging to see if they are compatible. Due to our extensive planning this has worked quite well as everyone had a good understanding of the whole picture and how the parts were supposed to fit together. Also since we coded in pairs there was always someone to discuss with and who could help look for errors and bugs.
 \\\\
-Our strategy for traceability was implemented right before we started to code by creating branches in our Github, which can be found in the appendix. The code wasn't pushed to main branch until the very end when we had a finished product. During development our group split into pairs which each had a branch. The pairs worked on different parts and when ready the different parts where merged into a development branch. This worked really well as it made it easy to see progress and to solve any problems that arose. 
+Our strategy for traceability was implemented right before we started to code by creating branches in our Github, which can be found in the appendix. The code was not pushed to main branch until the very end when we had a finished product. During development our group split into pairs which each had a branch. The pairs worked on different parts and when ready the different parts where merged into a development branch. This worked really well as it made it easy to see progress and to solve any problems that arose. 
 \\\\
 Regarding the quality risk analysis our solution was to create a class diagram for object definitions by discussing our understanding of SysML v2 in group. By doing this we have made sure that others can understand how we interpreted SysML v2 and how we implemented it. The code has been kept as modular as possible for the same reason. 
 \\\\
-Since our product is quite small in terms of lines of code, we didn't have to worry about rippling effects created by a modular design as we feared in our change analysis. It might be a bigger problem in the future when more functionality is added but for this project it didn't pose a problem. 
+Since our product is quite small in terms of lines of code, we did not have to worry about rippling effects created by a modular design as we feared in our change analysis. It might be a bigger problem in the future when more functionality is added but for this project it did not pose a problem. 
 \\\\
-With the help of our branches we could test functions and parts of the code either separately or together to find bugs in unexpected places. This was described in the cross functional testing description and while we didn't experience many bugs due to our relatively small product it was still a well functioning strategy.
+With the help of our branches we could test functions and parts of the code either separately or together to find bugs in unexpected places. This was described in the cross functional testing description and while we did not experience many bugs due to our relatively small product it was still a well functioning strategy.
 
 \newpage
 \section{Ethical assessment}
@@ -209,11 +214,11 @@ A positive side from an ethical point of view is however the complete opposite o
 \section{Conclusion and future work}
 %Avslutande summering av resultat med reflektioner om omfattning på leverans, kvalité, tillämpbarhet och fortsättning. 
 
-As stated earlier the goal of this project wasn't a finished product, but rather to lay the groundwork for future attempts, and ensure that whoever takes up this project after us has a real chance to continue our work and actually finish it. Therefore there is a lot of work left to do before the product is finished according to specifications. First of all since SysML v2 is a newly released language still under development, modifications and additions to our plan will probably be necessary. For example our object definitions as described in a class diagram, shown in figure \ref{fig:class_diagram}, will need to be updated if their specifications are changed. 
+As stated earlier the goal of this project was not a finished product, but rather to lay the groundwork for future attempts, and ensure that whoever takes up this project after us has a real chance to continue our work and actually finish it. Therefore there is a lot of work left to do before the product is finished according to specifications. First of all since SysML v2 is a newly released language still under development, modifications and additions to our plan will probably be necessary. For example our object definitions as described in a class diagram, shown in figure \ref{fig:class_diagram}, will need to be updated if their specifications are changed. 
 \\\\
 In the graphical representation one of the first steps for improvement would be to add a layout algorithm so that all objects are placed visibly and correct in relation to each other. Since the product is supposed to show different diagrams, the ability to place objects like these diagrams needs to be added as well. It would also be preferable if different objects had distinct designs, for example if packages and parts looked different from each other. Another valuable requirement for this project is interactivity. As such, focus needs to be put on this area to make sure the requirements are met. For example this could mean: adding zooming to see different levels or views; being able to double click on a component for further information or to see connections between components in different parts of a system. Also as more object definitions are added, parsing rules will need to be added as well. 
 \\\\
-As we knew that changes would be necessary in the future, we have tried to make the program as modular as possible and created an easy to read documentation of our work. This way it will be easier to pick up right where we left off and to add new functionality. Even though our product doesn't hold much practical value in its current state, it has a lot of potential if developed upon further. Then it could prove a valuable tool for system developers in a wide range of fields. 
+As we knew that changes would be necessary in the future, we have tried to make the program as modular as possible and created an easy to read documentation of our work. This way it will be easier to pick up right where we left off and to add new functionality. Even though our product does not hold much practical value in its current state, it has a lot of potential if developed upon further. Then it could prove a valuable tool for system developers in a wide range of fields. 
 
 
 \newpage
